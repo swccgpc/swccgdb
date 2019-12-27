@@ -48,6 +48,7 @@
         "willdurand/js-translation-bundle": "^2.6"
     },
     "require-dev": {
+        "laravel/homestead": "^10.1",
         "phpunit/phpunit": "^6.5",
         "sensio/generator-bundle": "^3.0",
         "symfony/phpunit-bridge": "^3.0"
