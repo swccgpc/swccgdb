@@ -1,14 +1,14 @@
 <div class="card-info">
 	<p>
 	{% if card.type_code == 'effect' or card.type_code == 'interrupt' or card.type_code == 'weapon' or card.type_code == 'vehicle' %}
-		{% if card.subtype_name is not empty %}<span class="card-subtype">{{ card.subtype_name }}</span> {% endif %}
+		{% if card.subtype_name is defined and card.subtype_name is not empty %}<span class="card-subtype">{{ card.subtype_name }}</span> {% endif %}
 		<span class="card-type">{{ card.type_name }}.</span>
 	{% elseif card.type_code == 'starship' %}
 		<span class="card-subtype">{{ card.subtype_name }}: {{card.model_type}}.</span>
 	{% elseif card.type_code == 'creature' %}
 		<span class="card-subtype">{{card.model_type}} {{ card.type_name }}.</span>
 	{% else %}
-		{% if card.subtype_name is not empty %}
+		{% if card.subtype_name is defined and card.subtype_name is not empty %}
 			<span class="card-subtype">{{ card.subtype_name }}.</span>
 		{% else %}
 			<span class="card-type">{{ card.type_name }}.</span>
