@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "196c367705e0017f5025268db2b2007d",
+    "content-hash": "5943c7e91f429a11396bca2683b1f8a4",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -1610,6 +1610,92 @@
             "time": "2015-11-10T17:04:01+00:00"
         },
         {
+            "name": "javiereguiluz/easyadmin-bundle",
+            "version": "v1.17.21",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/EasyCorp/EasyAdminBundle.git",
+                "reference": "8bd4bc4324709e3fa9bebf70cc0d6401aedb41b1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/EasyCorp/EasyAdminBundle/zipball/8bd4bc4324709e3fa9bebf70cc0d6401aedb41b1",
+                "reference": "8bd4bc4324709e3fa9bebf70cc0d6401aedb41b1",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/cache": "~1.5",
+                "doctrine/dbal": "~2.3",
+                "doctrine/doctrine-bundle": "~1.2",
+                "doctrine/orm": "~2.3",
+                "pagerfanta/pagerfanta": "~1.0,>=1.0.1|~2.0",
+                "php": ">=5.3.0",
+                "psr/log": "^1.0",
+                "symfony/asset": "~2.3|~3.0|^4.0",
+                "symfony/config": "~2.3|~3.0|^4.0",
+                "symfony/dependency-injection": "~2.3|~3.0|^4.0",
+                "symfony/doctrine-bridge": "~2.3|~3.0|^4.0",
+                "symfony/event-dispatcher": "~2.3|~3.0|^4.0",
+                "symfony/finder": "~2.3|~3.0|^4.0",
+                "symfony/form": "~2.3|~3.0|^4.0",
+                "symfony/framework-bundle": "~2.3|~3.0|^4.0",
+                "symfony/http-foundation": "~2.3|~3.0|^4.0",
+                "symfony/http-kernel": "~2.3|~3.0|^4.0",
+                "symfony/polyfill-mbstring": "^1.0",
+                "symfony/property-access": "~2.3|~3.0|^4.0",
+                "symfony/routing": "~2.3|~3.0|^4.0",
+                "symfony/security-bundle": "~2.3|~3.0|^4.0",
+                "symfony/translation": "~2.3|~3.0|^4.0",
+                "symfony/twig-bridge": "^2.3.4|~3.0|^4.0",
+                "symfony/twig-bundle": "~2.3|~3.0|^4.0",
+                "symfony/validator": "~2.3|~3.0|^4.0",
+                "twig/extensions": "~1.0",
+                "twig/twig": "~1.26|~2.0"
+            },
+            "require-dev": {
+                "doctrine/doctrine-fixtures-bundle": "~2.2",
+                "psr/log": "~1.0",
+                "symfony/browser-kit": "~2.3|~3.0|^4.0",
+                "symfony/console": "~2.3|~3.0|^4.0",
+                "symfony/css-selector": "~2.3|~3.0|^4.0",
+                "symfony/dom-crawler": "~2.3|~3.0|^4.0",
+                "symfony/phpunit-bridge": "^3.2|^4.0",
+                "symfony/var-dumper": "~2.3|~3.0|^4.0",
+                "symfony/yaml": "~2.3|~3.0|^4.0"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.17.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "EasyCorp\\Bundle\\EasyAdminBundle\\": "src/",
+                    "JavierEguiluz\\Bundle\\EasyAdminBundle\\": "legacy/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Project Contributors",
+                    "homepage": "http://github.com/EasyCorp/easyadmin/blob/master/CONTRIBUTORS.md"
+                }
+            ],
+            "description": "Admin generator for Symfony applications",
+            "homepage": "https://github.com/EasyCorp/EasyAdminBundle",
+            "keywords": [
+                "admin",
+                "backend",
+                "generator"
+            ],
+            "abandoned": "easycorp/easyadmin-bundle",
+            "time": "2019-02-10T10:15:49+00:00"
+        },
+        {
             "name": "jdorn/sql-formatter",
             "version": "v1.2.17",
             "source": {
@@ -2111,6 +2197,75 @@
                 "crossdomain"
             ],
             "time": "2017-12-11T18:41:54+00:00"
+        },
+        {
+            "name": "pagerfanta/pagerfanta",
+            "version": "v2.1.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/whiteoctober/Pagerfanta.git",
+                "reference": "a53ff01d521648d9dbca19b93ac6bc75a59b0972"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/whiteoctober/Pagerfanta/zipball/a53ff01d521648d9dbca19b93ac6bc75a59b0972",
+                "reference": "a53ff01d521648d9dbca19b93ac6bc75a59b0972",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.0"
+            },
+            "require-dev": {
+                "doctrine/orm": "~2.3",
+                "doctrine/phpcr-odm": "1.*",
+                "jackalope/jackalope-doctrine-dbal": "1.*",
+                "jmikola/geojson": "~1.0",
+                "mandango/mandango": "~1.0@dev",
+                "mandango/mondator": "~1.0@dev",
+                "phpunit/phpunit": "^6.5",
+                "propel/propel": "~2.0@dev",
+                "propel/propel1": "~1.6",
+                "ruflin/elastica": "~1.3",
+                "solarium/solarium": "~3.1"
+            },
+            "suggest": {
+                "doctrine/mongodb-odm": "To use the DoctrineODMMongoDBAdapter.",
+                "doctrine/orm": "To use the DoctrineORMAdapter.",
+                "doctrine/phpcr-odm": "To use the DoctrineODMPhpcrAdapter. >= 1.1.0",
+                "mandango/mandango": "To use the MandangoAdapter.",
+                "propel/propel": "To use the Propel2Adapter",
+                "propel/propel1": "To use the PropelAdapter",
+                "solarium/solarium": "To use the SolariumAdapter."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Pagerfanta\\": "src/Pagerfanta/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Pablo Díez",
+                    "email": "pablodip@gmail.com"
+                }
+            ],
+            "description": "Pagination for PHP",
+            "keywords": [
+                "page",
+                "pagination",
+                "paginator",
+                "paging"
+            ],
+            "time": "2019-07-17T20:56:16+00:00"
         },
         {
             "name": "paragonie/random_compat",
@@ -3469,6 +3624,61 @@
             "time": "2018-01-29T12:30:04+00:00"
         },
         {
+            "name": "twig/extensions",
+            "version": "v1.5.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/twigphp/Twig-extensions.git",
+                "reference": "57873c8b0c1be51caa47df2cdb824490beb16202"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/twigphp/Twig-extensions/zipball/57873c8b0c1be51caa47df2cdb824490beb16202",
+                "reference": "57873c8b0c1be51caa47df2cdb824490beb16202",
+                "shasum": ""
+            },
+            "require": {
+                "twig/twig": "^1.27|^2.0"
+            },
+            "require-dev": {
+                "symfony/phpunit-bridge": "^3.4",
+                "symfony/translation": "^2.7|^3.4"
+            },
+            "suggest": {
+                "symfony/translation": "Allow the time_diff output to be translated"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.5-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Twig_Extensions_": "lib/"
+                },
+                "psr-4": {
+                    "Twig\\Extensions\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                }
+            ],
+            "description": "Common additional features for Twig that do not directly belong in core",
+            "keywords": [
+                "i18n",
+                "text"
+            ],
+            "time": "2018-12-05T18:34:18+00:00"
+        },
+        {
             "name": "twig/twig",
             "version": "v2.4.4",
             "source": {
@@ -4474,6 +4684,7 @@
                 "mock",
                 "xunit"
             ],
+            "abandoned": true,
             "time": "2018-01-06T05:45:45+00:00"
         },
         {

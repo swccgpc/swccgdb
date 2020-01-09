@@ -135,6 +135,26 @@ fos_oauth_server:
     service:
         user_provider: fos_user.user_provider.username
 
+# EasyAdmin integration with FOSUser
+easy_admin:
+   entities:
+       User:
+           class: AppBundle\Entity\User
+           list:
+               fields:
+                   - id
+                   - username
+                   - email
+                   - enabled
+           form:
+               fields:
+                   - username
+                   - email
+                   - roles
+                   - enabled
+                   - lastLogin
+                   - { property: 'roles', type: 'choice', type_options: { multiple: true, choices: { 'ROLE_USER': 'ROLE_USER', 'ROLE_ADMIN': 'ROLE_ADMIN' } } }
+
 # JsTranslationBundle Configuration
 bazinga_js_translation:
     locale_fallback: '%kernel.default_locale%'

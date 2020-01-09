@@ -48,3 +48,8 @@ oauth_server_auth_login_check:
     path:  /oauth/v2/auth_login_check
     defaults:
         _controller: AppBundle:Security:loginCheck
+
+easy_admin_bundle:
+   resource: "@EasyAdminBundle/Controller/"
+   type:     annotation
+   prefix:   /admin
