@@ -19,6 +19,8 @@ class CardsData
 {
     /** @var \Symfony\Component\Asset\Packages $packages */
     private $packages;
+    
+    private static $card_image_base_url = "https://scomp.starwarsccg.org/cards/starwars/";
 
     public function __construct(Registry $doctrine, RequestStack $request_stack, Router $router, \Symfony\Component\Asset\Packages $packages, TranslatorInterface $translator, $rootDir)
     {
