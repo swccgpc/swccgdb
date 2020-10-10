@@ -472,10 +472,10 @@ class CardsData
         $cardinfo['url'] = $this->router->generate('cards_zoom', array('card_code' => $card->getCode()), UrlGeneratorInterface::ABSOLUTE_URL);
 
         $cardinfo['label'] = $card->getName();
-        $cardinfo['image_url'] = 'https://www.starwarsccg.org/wp/wp-content/plugins/card-search/cards/starwars/' . $cardinfo['image_url'];
+        $cardinfo['image_url'] = 'https://scomp.starwarsccg.org/cards/starwars/' . $cardinfo['image_url'];
 
         if($cardinfo['image_url2']) {
-          $cardinfo['image_url2'] = 'https://www.starwarsccg.org/wp/wp-content/plugins/card-search/cards/starwars/' . $cardinfo['image_url2'];
+          $cardinfo['image_url2'] = 'https://scomp.starwarsccg.org/cards/starwars/' . $cardinfo['image_url2'];
         }
 
         $cardinfo['icon'] = $card->getIcon();
