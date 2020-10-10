@@ -1,8 +1,14 @@
 SWCCGDB
 =======
 
-This repository holds the source code of [SW:CCG DB](https://swccgdb.com).
+> **DEPRECATED** :: The PHP version of the SWCCG Database has been replaced with a new NodeJS version. Please visit the `main` branch for the NodeJS version.
 
-# Looking for card data?
+## [swccgdb.com](https://swccgdb.com)
 
-The data used by SW:CCG DB is at [PrestonStahley/swccgdb-json-data](https://github.com/PrestonStahley/swccgdb-json-data). If you want to fix a mistake in some card data, or add the data of a new card, you can [submit a pull request](https://github.com/PrestonStahley/swccgdb-json-data/pulls).
+* This repository holds the source code.
+
+## JSON formatted card data
+
+* The data used by SW:CCG DB is at [swccgpc/swccgdb-json-data](https://github.com/swccgpc/swccgdb-json-data).
+* If you want to fix a mistake in some card data, or add the data of a new card, you can [submit a pull request](https://github.com/swccgpc/swccgdb-json-data/pulls).
+
