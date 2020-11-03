@@ -654,3 +654,53 @@ article.review .review-comment {
   -o-transform: rotateY( 180deg );
   transform: rotateY( 180deg );
 }
+
+/************* INVENTORY *********************/
+
+.inventory-totals {
+  padding-right: 0;
+}
+.inventory-totals .breadcrumb {
+  padding: 10px 15px;
+}
+.inventory-pager {
+  padding-left: 0;
+}
+.inventory-pager a {
+  font-weight: bold;
+}
+.inventory-pager .pager {
+  margin: 0;
+  text-align: right;
+  background-color: #f5f5f5;
+  padding: 4px 15px;
+  height: 40px;
+}
+.inventory-pager .pager--prev {
+  margin-right: 20px;
+}
+.inventory-sets .dropdown-menu {
+  min-width: 350px;
+}
+.inventory-options .dropdown-menu {
+  min-width: 205px;
+}
+.inventory-sets li label,
+.inventory-options li label {
+  padding: 5px 20px;
+  cursor: pointer;
+  width: 100%;
+}
+.inventory-sets li label:hover,
+.inventory-options li label:hover {
+  background-color: #f5f5f5;
+}
+.react-tooltip.show {
+  opacity: 1 !important;
+}
+.ReactModal__Overlay--after-open.modal-backdrop {
+  background-color: rgba(0, 0, 0, .5);
+}
+.card-row td.actions {
+  width: 72px;
+}

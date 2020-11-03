@@ -14,6 +14,10 @@ app_decklist:
     resource: "@AppBundle/Resources/config/routing/routing_decklist.yml"
     prefix: /decklist
 
+app_inventory:
+    resource: "@AppBundle/Resources/config/routing/routing_inventory.yml"
+    prefix: /inventory
+
 app_review:
     resource: "@AppBundle/Resources/config/routing/routing_review.yml"
     prefix: /review
@@ -76,4 +80,4 @@ about:
 ffg:
     path: /ffg
     defaults:
-        _controller: AppBundle:Default:ffg
+      _controller: A:ppBundle:Default:ffg

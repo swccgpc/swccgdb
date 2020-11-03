@@ -18,3 +18,4 @@
 .php_cs.cache
 web/css
 web/js
+node_modules

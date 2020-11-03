@@ -1,0 +1,24 @@
+AppBundle\Entity\Inventory:
+    type: entity
+    table: inventory
+    repositoryClass: AppBundle\Repository\InventoryRepository
+    oneToOne:
+        user:
+            targetEntity: User
+            nullable: false
+            inversedBy: inventory
+            joinColumn:
+                name: user_id
+                referencedColumnName: id
+    oneToMany:
+        slots:
+            targetEntity: InventorySlot
+            mappedBy: inventory
+            cascade: ["persist","remove"]
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    lifecycleCallbacks: {  }

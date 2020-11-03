@@ -1,0 +1,10 @@
+{
+  "entrypoints": {
+    "inventory": {
+      "js": [
+        "/assets/js/runtime.js",
+        "/assets/js/inventory.js"
+      ]
+    }
+  }
+}

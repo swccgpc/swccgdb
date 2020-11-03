@@ -75,6 +75,11 @@ class User extends BaseUser
     private $isShareDecks = false;
 
     /**
+     * @var \AppBundle\Entity\Inventory
+     */
+    private $inventory;
+
+    /**
      * @var \Doctrine\Common\Collections\Collection
      */
     private $decks;
@@ -403,6 +408,16 @@ class User extends BaseUser
     public function getIsShareDecks()
     {
         return $this->isShareDecks;
+    }
+
+    /**
+     * Get inventory
+     *
+     * @return \AppBundle\Entity\Inventory
+     */
+    public function getInventory()
+    {
+        return $this->inventory;
     }
 
     /**

@@ -189,14 +189,18 @@ class ApiController extends Controller
         $jsonp = $request->query->get('jsonp');
 
         $list_cards = $this->getDoctrine()->getRepository('AppBundle:Card')->findAll();
-
+        $inventory_cards = $this->getUser()->getInventory()->getSlotsKeyedByCardId();
         // check the last-modified-since header
 
         $lastModified = null;
         /* @var $card \AppBundle\Entity\Card */
         foreach ($list_cards as $card) {
-            if (!$lastModified || $lastModified < $card->getDateUpdate()) {
-                $lastModified = $card->getDateUpdate();
+            $cardDateUpdated = $card->getDateUpdate();
+            if (array_key_exists($card->getId(), $inventory_cards) && $cardDateUpdated < $inventory_cards[$card->getId()]->getDateUpdate()) {
+                $cardDateUpdated = $inventory_cards[$card->getId()]->getDateUpdate();
+            }
+            if (!$lastModified || $lastModified < $cardDateUpdated) {
+                $lastModified = $cardDateUpdated;
             }
         }
         $response->setLastModified($lastModified);
@@ -209,7 +213,12 @@ class ApiController extends Controller
         $cards = array();
         /* @var $card \AppBundle\Entity\Card */
         foreach ($list_cards as $card) {
-            $cards[] = $this->get('cards_data')->getCardInfo($card, true, $locale);
+            $card_data = $this->get('cards_data')->getCardInfo($card, true, $locale);
+            $card_data['inventory_qty'] = 0;
+            if (array_key_exists($card->getId(), $inventory_cards)) {
+              $card_data['inventory_qty'] = $inventory_cards[$card->getId()]->getQuantity();
+            }
+            $cards[] = $card_data;
         }
 
         $content = json_encode($cards);

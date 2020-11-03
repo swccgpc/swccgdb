@@ -6,7 +6,7 @@
     var locale_changed = false;
 
     var fdb = new ForerunnerDB();
-    var database = fdb.db('thronesdb');
+    var database = fdb.db('swccgdb');
     var masters = {
         sets: database.collection('master_set', {primaryKey: 'code'}),
         cards: database.collection('master_card', {primaryKey: 'code'})
@@ -115,21 +115,23 @@
      * @memberOf data
      */
     function update_done() {
+        var isInventory = $('#inventory').size() !== 0;
         if (database_changed && !locale_changed) {
             /*
              * we display a message informing the user that they can reload their page to use the updated data
              * except if we are on the front page, because data is not essential on the front page
              */
-            if ($('.site-title').size() === 0) {
+            if ($('.site-title').size() === 0 && !isInventory) {
                 var message = "A new version of the data is available. Click <a href=\"javascript:window.location.reload(true)\">here</a> to reload your page.";
                 app.ui.insert_alert_message('warning', message);
             }
         }
 
         // if it is a force update, we haven't release the data yet
-        if (!data.isLoaded) {
+        if (!data.isLoaded || isInventory) {
             release();
-        }
+        } 
+        $(document).trigger('final_data.app');
     }
 
     /**

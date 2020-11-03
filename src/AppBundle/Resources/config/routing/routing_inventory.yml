@@ -1,0 +1,19 @@
+inventory:
+    path: /
+    methods: [GET]
+    defaults:
+        _controller: AppBundle:Inventory:view
+
+inventory_add:
+    path: /add/{card_code}
+    methods: [GET]
+    defaults:
+        _controller: AppBundle:Inventory:addCard
+        card_code: \d+
+
+inventory_remove:
+    path: /remove/{card_code}
+    methods: [GET]
+    defaults:
+        _controller: AppBundle:Inventory:removeCard
+        card_code: \d+

@@ -1,6 +1,10 @@
 AppBundle\Entity\User:
     type:  entity
     table: user
+    oneToOne:
+        inventory:
+            targetEntity: Inventory
+            mappedBy: user
     oneToMany:
         decks:
             targetEntity: Deck

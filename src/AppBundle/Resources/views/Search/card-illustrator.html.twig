@@ -1,4 +1,4 @@
-{% if card.illustrator is not empty %}
+{% if card.illustrator is defined and card.illustrator is not empty %}
 <div class="card-illustrator">
 	<span class="fa fa-paint-brush text-muted"></span>
 	{{ card.illustrator }}

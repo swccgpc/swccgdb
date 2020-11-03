@@ -153,3 +153,7 @@ nelmio_cors:
             allow_origin: ['*']
             allow_methods: ['GET']
             max_age: 3600
+
+# Webpack Encore Configuration
+webpack_encore:
+    output_path: "%kernel.project_dir%/web/assets/js"
