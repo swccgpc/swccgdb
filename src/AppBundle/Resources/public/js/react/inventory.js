@@ -8,6 +8,5 @@ function App(props) {
 }
 
 $(document).on('final_data.app', () => {
-  console.log("REACT BOOT");
   render(<App data={app.data} />, document.getElementById('inventory'));
 });
