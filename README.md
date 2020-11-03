@@ -19,7 +19,7 @@ Dev setup:
 2. composer install
 3. ./bin/console doctrine:database:create
 4. ./bin/console doctrine:schema:create
-5. Clone https://github.com/PrestonStahley/swccgdb-json-data
+5. Clone https://github.com/swccgpc/swccgdb-json-data
 6. ./bin/console app:import:std /path/to/swccgdb-json-data/
 ** May need to fix some data inconsistencies (ex. jedi-master-imperial ->
 dark-jedi-master-imperial)
