@@ -657,11 +657,15 @@ article.review .review-comment {
 
 /************* INVENTORY *********************/
 
+.inventory-info {
+  margin-bottom: 5px;
+}
 .inventory-totals {
   padding-right: 0;
 }
 .inventory-totals .breadcrumb {
   padding: 10px 15px;
+  margin-bottom: 0px;
 }
 .inventory-pager {
   padding-left: 0;
@@ -678,6 +682,9 @@ article.review .review-comment {
 }
 .inventory-pager .pager--prev {
   margin-right: 20px;
+}
+.inventory-export-import {
+  margin-bottom: 5px;
 }
 .inventory-sets .dropdown-menu {
   min-width: 350px;
