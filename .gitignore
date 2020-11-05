@@ -18,4 +18,5 @@
 .php_cs.cache
 web/css
 web/js
+web/assets/js
 node_modules
