@@ -124,14 +124,15 @@ class InventoryController extends Controller
     while (($row = fgetcsv($handle)) !== FALSE) {
       if ($i === 0) {
         foreach ($row as $key => $column) {
-          if (strtolower($column) == 'code') {
+          $column = preg_replace('/\PL/u', '', strtolower($column));
+          if ($column == 'code') {
             $codeKey = $key;
-          } else if (strtolower($column) == 'qty') {
+          } else if ($column == 'qty') {
             $qtyKey = $key;
           }
         }
         if ($codeKey === null || $qtyKey === null) {
-          $response->setContent('"Code" and "Qty" columns are required.');
+          $response->setContent('"code" and "qty" columns are required.');
           $response->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
           return $response;
         }

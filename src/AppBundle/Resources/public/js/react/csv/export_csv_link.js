@@ -33,13 +33,13 @@ export function ExportCSVLink({data, filename}) {
 
 function formatCSVData(data) {
   const columns = {
-    code: 'Code',
-    label: 'Name',
-    side_name: 'Side',
-    set_name: 'Set',
-    type_name: 'Type',
-    subtype_name: 'Sub-type',
-    inventory_qty: 'Qty',
+    code: "code",
+    label: "name",
+    side_name: "side",
+    set_name: "set",
+    type_name: "type",
+    subtype_name: "subtype",
+    inventory_qty: "qty",
   };
 
   return data.map(card => {

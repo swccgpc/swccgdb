@@ -100,7 +100,7 @@ export function ImportCSVLink() {
                   <div class="form-group">
                     <label for="upfile">File</label>
                     <input class="form-control" type="file" name="upfile" onChange={handleFileChange} />
-                    <small>"Code" and "Qty" columns are required.</small>
+                    <small>"code" and "qty" columns are required.</small>
                   </div>
                   <div class="pull-right">
                     <button type="submit" class="btn btn-success" disabled={isProcessing}>Upload</button>
