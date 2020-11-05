@@ -23,3 +23,9 @@ inventory_remove:
     defaults:
         _controller: AppBundle:Inventory:removeCard
         card_code: \d+
+
+inventory_import:
+    path: /import
+    methods: [POST]
+    defaults:
+        _controller: AppBundle:Inventory:import

@@ -3,10 +3,11 @@
 namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 use AppBundle\Entity\Inventory;
 use AppBundle\Entity\InventorySlot;
@@ -62,7 +63,7 @@ class InventoryController extends Controller
     $entityManager = $this->getDoctrine()->getManager();
     $inventory = $user->getInventory();
     $slot = $this->getDoctrine()->getRepository('AppBundle:InventorySlot')->findOneBy([
-      'inventory' => $user,
+      'inventory' => $inventory,
       'card' => $card,
     ]);
     if ($slot === null) {
@@ -89,7 +90,7 @@ class InventoryController extends Controller
     $entityManager = $this->getDoctrine()->getManager();
     $inventory = $user->getInventory();
     $slot = $this->getDoctrine()->getRepository('AppBundle:InventorySlot')->findOneBy([
-      'inventory' => $user,
+      'inventory' => $inventory,
       'card' => $card,
     ]);
     if ($slot !== null) {
@@ -103,5 +104,73 @@ class InventoryController extends Controller
       $entityManager->flush();
     }
     return new Response("Inventory card decremented");
+  }
+
+  public function importAction(Request $request)
+  {
+    $response = new Response();
+    $response->headers->set('Content-Type', 'application/json');
+    $file = $request->files->get('file');
+    $handle = fopen($file->getPathname(), "r");
+    if ($handle === FALSE) {
+      $response->setContent("Failed to parse uploaded CSV.");
+      $response->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
+      return $response;
+    }
+    $inventory = $this->getUser()->getInventory();
+    $i = 0;
+    $codeKey = null;
+    $qtyKey = null;
+    while (($row = fgetcsv($handle)) !== FALSE) {
+      if ($i === 0) {
+        foreach ($row as $key => $column) {
+          if (strtolower($column) == 'code') {
+            $codeKey = $key;
+          } else if (strtolower($column) == 'qty') {
+            $qtyKey = $key;
+          }
+        }
+        if ($codeKey === null || $qtyKey === null) {
+          $response->setContent('"Code" and "Qty" columns are required.');
+          $response->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
+          return $response;
+        }
+        $i++;
+        continue;
+      }
+      $i++;
+      $code = $row[$codeKey];
+      $qty = $row[$qtyKey];
+      $card = $this->getDoctrine()->getRepository('AppBundle:Card')->findOneByCode($code);
+      if ($card === null) {
+        $response->setContent("Card with code {$code} does not exist.");
+        $response->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
+        return $response;
+      }
+      $entityManager = $this->getDoctrine()->getManager();
+      $slot = $this->getDoctrine()->getRepository('AppBundle:InventorySlot')->findOneBy([
+        'inventory' => $inventory,
+        'card' => $card,
+      ]);
+      // Don't create a new inventory slot if there's not one already and the
+      // quantity is 0. If there is a slot, delete it.
+      if ($qty == 0 || $qty == '') {
+        if ($slot !== null) {
+          $entityManager->remove($slot);
+          $entityManager->flush();
+        }
+        continue;
+      }
+      if ($slot === null) {
+        $slot = new InventorySlot();
+        $slot->setInventory($inventory);
+        $slot->setCard($card);
+      }
+      $slot->setQuantity($qty);
+      $entityManager->persist($slot);
+      $entityManager->flush();
+    }
+    fclose($handle);
+    return $response;
   }
 }

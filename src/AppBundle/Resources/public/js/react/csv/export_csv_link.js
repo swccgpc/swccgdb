@@ -22,14 +22,12 @@ export function ExportCSVLink({data, filename}) {
   }, [downloadingCSV, downloadURL]);
 
   return (
-    <div class="row inventory-export-import">
-      <div class="col-md-12 text-right">
-        <a class="btn btn-default btn-xs" href="#" onClick={handleClick}>
-          <span class="fa fa-download"></span> Export
-        </a>
-        <a ref={csvDownloadLink} download={filename} href={downloadURL}></a>
-      </div>
-    </div>
+    <>
+      <a class="btn btn-default btn-xs" href="#" onClick={handleClick}>
+        <span class="fa fa-download"></span> Export
+      </a>
+      <a ref={csvDownloadLink} download={filename} href={downloadURL}></a>
+    </>
   );
 }
 

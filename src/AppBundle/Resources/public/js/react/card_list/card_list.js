@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {h} from 'preact';
 import ReactTooltip from 'react-tooltip';
-import {ExportCSVLink} from "../csv/export_csv_link";
+import {CardListImportExportLinks} from './card_list_import_export_links';
 import {CardListFilters} from './card_list_filters';
 import {CardListInfo} from './card_list_info';
 import {CardListResults} from './card_list_results';
@@ -69,10 +69,7 @@ export function CardList({sets, cards, setCards}) {
         cards={filteredCards}
         inInventory={inInventory}
       />
-      <ExportCSVLink
-        data={filteredCards}
-        filename="inventory_export.csv"
-      />
+      <CardListImportExportLinks data={filteredCards} />
       <CardListResults
         selectedDisplay={selectedDisplay}
         cards={getCardsToShow()}
