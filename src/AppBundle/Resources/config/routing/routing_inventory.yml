@@ -4,6 +4,12 @@ inventory:
     defaults:
         _controller: AppBundle:Inventory:view
 
+inventory_quantities:
+    path: /get-card-quantities
+    methods: [GET]
+    defaults:
+        _controller: AppBundle:Inventory:getCardQuantities
+
 inventory_add:
     path: /add/{card_code}
     methods: [GET]

@@ -38,7 +38,15 @@ class InventoryController extends Controller
         'inventory' => $inventory,
       ]
     );
+  }
 
+  public function getCardQuantitiesAction() {
+    $cardQuantities = $this->getUser()->getInventory()->getCardQuantities();
+    $response = new Response();
+    $response->headers->set('Content-Type', 'application/json');
+    $content = json_encode($cardQuantities);
+    $response->setContent($content);
+    return $response;
   }
 
   public function addCardAction($card_code)

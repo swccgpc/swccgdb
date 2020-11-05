@@ -3,7 +3,7 @@ import {h} from 'preact';
 import ReactTooltip from 'react-tooltip';
 import {formatName, formatInfo, formatText, formatSet} from '../helpers/card';
 
-export function CardTooltip({cardDB}) {
+export function CardTooltip({cards}) {
   return (
     <ReactTooltip
       id="card-tooltip"
@@ -15,10 +15,11 @@ export function CardTooltip({cardDB}) {
       backgroundColor="white"
       className="react-tooltip card-content qtip-thronesdb"
       getContent={(code) => {
-        const card = cardDB.findById(code);
-        if (!card) {
+        let card = cards.filter(card => card.code == code);
+        if (card.length === 0) {
           return '';
         }
+        card = card[0];
         const horizontalClass = (card.subtype_code == 'site' || card.is_horizontal) ? 'card-thumbnail-horizontal' : '';
         const image = card.image_url ? <div class={`card-thumbnail card-thumbnail-${card.type_code} ${horizontalClass}`} style={`background-image:url(${card.image_url})`}></div> : '';
         return (

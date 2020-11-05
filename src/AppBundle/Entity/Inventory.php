@@ -75,14 +75,14 @@ class Inventory
   }
 
   /**
-   * Get slots keyed by Card ID
+   * Get Quantities keyed by Card Code
    *
    * @return array
    */
-  public function getSlotsKeyedByCardId() {
+  public function getCardQuantities() {
     $slots = $this->slots->toArray();
     $cards = array_reduce($slots, function ($cards, $slot) {
-      $cards[$slot->getCard()->getId()] = $slot;
+      $cards[$slot->getCard()->getCode()] = $slot->getQuantity();
       return $cards;
     }, []);
     return $cards;

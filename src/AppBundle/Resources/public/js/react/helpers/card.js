@@ -1,50 +1,75 @@
 import React from 'react';
 import {h} from 'preact';
 
-export function findCards(cardsDB, sets, types, inInventory, selectedSide, searchText, sort) {
-  const filters = {};
-  setSetsFilter(sets, filters);
-  setTypesFilter(types, filters);
-  setInInventoryFilter(inInventory, filters);
-  setSideFilter(selectedSide, filters);
-  setSearchTextFilter(searchText, filters);
-  const orderBy = {
-    $orderBy: sort,
-  };
-  return cardsDB.find(filters, orderBy);
+export function filterCards(cards, sets, types, inInventory, selectedSide, searchText, sorts) {
+  let filteredCards = filterBySide(cards, selectedSide);
+  filteredCards = filterBySet(filteredCards, sets); 
+  filteredCards = filterByType(filteredCards, types);
+  filteredCards = filterByInInventory(filteredCards, inInventory);
+  filteredCards = filterBySearchText(filteredCards, searchText);
+  sortCards(filteredCards, sorts);
+  return filteredCards;
 }
 
-function setSetsFilter(sets, filters) {
+function filterBySide(cards, side) {
+  if (side !== 'all') {
+    return cards.filter(card => card.side_code == side);
+  }
+  return cards
+}
+
+function filterBySet(cards, sets) {
   if (sets.length > 0) {
-    filters.set_code = {$in: sets};
+    return cards.filter(card => sets.includes(card.set_code));
   }
+  return cards;
 }
 
-function setTypesFilter(types, filters) {
+function filterByType(cards, types) {
     if (types.length > 0) {
-      filters.type_code = {$in: types};
+      return cards.filter(card => types.includes(card.type_code));
     }
+    return cards;
   }
 
-function setInInventoryFilter(inInventory, filters) {
+function filterByInInventory(cards, inInventory) {
   if (inInventory == 'in') {
-    filters.inventory_qty = {$gt: 0};
+    return cards.filter(card => card.inventory_qty > 0);
   }
   else if (inInventory == 'not_in') {
-    filters.inventory_qty = {$eq: 0};
+    return cards.filter(card => card.inventory_qty == 0);
   }
+  return cards;
 }
 
-function setSideFilter (side, filters) {
-  if (side !== 'all') {
-    filters.side_code = {$eq: side};
-  }
-}
-
-function setSearchTextFilter (searchText, filters) {
+function filterBySearchText(cards, searchText) {
   if (searchText != '') {
+    return cards.filter(card => card.name.includes(searchText));
     filters.name = new RegExp(searchText, 'i');
   }
+  return cards;
+}
+
+function sortCards(cards, sorts) {
+  Object.entries(sorts).forEach(([sortName, sortValue]) => {
+    const sortLower = sortValue == -1 ? 1 : -1;
+    const sortHigher = sortValue == -1 ? -1 : 1;
+    cards.sort((cardA, cardB) => {
+      let aValue = cardA[sortName];
+      let bValue = cardB[sortName];
+      if (typeof aValue === 'string') {
+        aValue = aValue.toLowerCase();
+        bValue = bValue.toLowerCase();
+      }
+      if (aValue > bValue) {
+        return sortHigher;
+      }
+      if (aValue < bValue) {
+        return sortLower;
+      }
+      return 0;
+    });
+  });
 }
 
 export function formatName(card) {

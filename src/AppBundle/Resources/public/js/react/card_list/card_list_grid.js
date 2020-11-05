@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {h} from 'preact';
 import {CardListGridItem} from './card_list_grid_item';
 
-export function CardListGrid({selectedDisplay, cards, sort, setSort, setOpenedCard}) {
+export function CardListGrid({selectedDisplay, cards, sort, setSort, setOpenedCard, cardActions}) {
   const headers = {
     name: "Name",
     type_code: "Type",
@@ -46,6 +46,7 @@ export function CardListGrid({selectedDisplay, cards, sort, setSort, setOpenedCa
       selectedDisplay={selectedDisplay}
       card={card}
       setOpenedCard={setOpenedCard}
+      cardActions={cardActions}
     />
   );
 

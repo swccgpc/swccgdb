@@ -55,6 +55,7 @@
     $(function ()
     {
 
+      if ($('#inventory').size() === 0) {
         $('body').on({click: function (event)
             {
                 var element = $(this);
@@ -64,6 +65,7 @@
                 }
                 card_modal.display_modal(event, element);
             }}, '.card');
+      }
 
     })
 

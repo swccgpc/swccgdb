@@ -2,10 +2,11 @@ import React from 'react';
 import {h} from 'preact';
 import ReactModal from 'react-modal';
 import {formatName, formatInfo, formatText, formatSet, formatTraits} from '../helpers/card';
+import {CardAddRemoveButtons} from './card_add_remove_buttons';
 
 ReactModal.setAppElement('#inventory');
 
-export function CardModal({openedCard, setOpenedCard}) {
+export function CardModal({openedCard, setOpenedCard, cardActions}) {
   const handleCloseModal = () => {
     setOpenedCard(null);
   }
@@ -40,15 +41,9 @@ export function CardModal({openedCard, setOpenedCard}) {
                 <div class="card-traits">{formatTraits(openedCard)}</div>
                 <div class={`card-text border-${openedCard.side_code}`}>{formatText(openedCard)}</div>
                 <div class="card-set"><p>{formatSet(openedCard)}</p></div>
+                <h5>Qty: {openedCard.inventory_qty}</h5>
               </div>
-              <div class="btn-group modal-qty" data-toggle="buttons">
-                <button type="button" class="btn btn-default btn-sm btn-card-remove" data-command="-" title="Remove from inventory">
-                  <span class="fa fa-minus"></span>
-                </button>
-                <button type="button" class="btn btn-default btn-sm btn-card-add" data-command="+" title="Add to inventory">
-                  <span class="fa fa-plus"></span>
-                </button>
-              </div>
+              <CardAddRemoveButtons card={openedCard} cardActions={cardActions} />
             </div>
           </div>
         </div>

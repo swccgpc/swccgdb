@@ -1,11 +1,13 @@
 import React from 'react';
 import {h} from 'preact';
+import {CardAddRemoveButtons} from './card_add_remove_buttons';
 
 export function CardListTableRow({card, setOpenedCard, cardActions}) {
   const handleCardClick = (event) => {
     if (event.shiftKey || event.altKey || event.ctrlKey || event.metaKey) {
       event.stopPropagation();
     } else {
+      event.preventDefault();
       setOpenedCard(card);
     }
   }
@@ -13,14 +15,7 @@ export function CardListTableRow({card, setOpenedCard, cardActions}) {
   return (
     <tr class="card-row">
       <td class="actions">
-        <div class="btn-group">
-          <button type="button" class="btn btn-default btn-sm btn-card-remove" title="Remove from inventory" onClick={() => cardActions.decrement(card)}>
-            <span class="fa fa-minus"></span>
-          </button>
-          <button type="button" class="btn btn-default btn-sm btn-card-add" title="Add to inventory" onClick={() => cardActions.increment(card)}>
-            <span class="fa fa-plus"></span>
-          </button>
-        </div>
+        <CardAddRemoveButtons card={card} cardActions={cardActions} />
       </td>
       <td class="name">
         <a href={Routing.generate('cards_zoom', {card_code: card.code})} class="card no-popup" onClick={handleCardClick} data-tip={card.code} data-for="card-tooltip">{card.label}</a>

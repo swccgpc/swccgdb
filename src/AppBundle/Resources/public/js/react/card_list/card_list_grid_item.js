@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import {h} from 'preact';
+import {CardAddRemoveButtons} from './card_add_remove_buttons';
 
-export function CardListGridItem({selectedDisplay, card, setOpenedCard}) {
+export function CardListGridItem({selectedDisplay, card, setOpenedCard, cardActions}) {
   const handleCardClick = (event) => {
     if (event.shiftKey || event.altKey || event.ctrlKey || event.metaKey) {
       event.stopPropagation();
@@ -27,14 +28,7 @@ export function CardListGridItem({selectedDisplay, card, setOpenedCard}) {
           <QtyTag>
             Qty: {card.inventory_qty}
           </QtyTag>
-          <div class="btn-group">
-            <button type="button" class="btn btn-default btn-sm btn-card-remove" data-command="-" title="Remove from deck">
-              <span class="fa fa-minus"></span>
-            </button>
-            <button type="button" class="btn btn-default btn-sm btn-card-add" data-command="+" title="Add to deck">
-              <span class="fa fa-plus"></span>
-            </button>
-          </div>
+          <CardAddRemoveButtons card={card} cardActions={cardActions} />
         </div>
       </div>
     </div>

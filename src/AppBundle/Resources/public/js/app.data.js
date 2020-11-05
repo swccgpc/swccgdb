@@ -115,23 +115,21 @@
      * @memberOf data
      */
     function update_done() {
-        var isInventory = $('#inventory').size() !== 0;
         if (database_changed && !locale_changed) {
             /*
              * we display a message informing the user that they can reload their page to use the updated data
              * except if we are on the front page, because data is not essential on the front page
              */
-            if ($('.site-title').size() === 0 && !isInventory) {
+            if ($('.site-title').size() === 0) {
                 var message = "A new version of the data is available. Click <a href=\"javascript:window.location.reload(true)\">here</a> to reload your page.";
                 app.ui.insert_alert_message('warning', message);
             }
         }
 
         // if it is a force update, we haven't release the data yet
-        if (!data.isLoaded || isInventory) {
+        if (!data.isLoaded) {
             release();
         } 
-        $(document).trigger('final_data.app');
     }
 
     /**
@@ -202,7 +200,9 @@
     }
 
     $(function () {
-        load();
+        if ($('#inventory').size() === 0) {
+            load();
+        }
     });
 
 })(app.data = {}, jQuery);

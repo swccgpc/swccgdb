@@ -6,20 +6,12 @@ import {CardListInfo} from './card_list_info';
 import {CardListResults} from './card_list_results';
 import {CardTooltip} from './card_tooltip';
 import {CardModal} from './card_modal';
-import {findCards} from '../helpers/card';
+import {filterCards} from '../helpers/card';
 import {getCardActions} from '../helpers/card_actions';
 
-export function CardList({data}) {
-  const [sets, setSets] = useState(() => {
-    return data.sets.find({}, {
-      $orderBy: {
-        cycle_position: 1,
-        position: 1
-      }
-    });
-  });
-  const [cards, setCards] = useState([]);
-  const [selectedSets, setSelectedSets] = useState(() => sets.map(set => set.code));
+export function CardList({sets, cards, setCards}) {
+  const [filteredCards, setFilteredCards] = useState([]);
+  const [selectedSets, setSelectedSets] = useState([]);
   const [selectedTypes, setSelectedTypes] = useState([]);
   const [inInventory, setInInventory] = useState('in');
   const [selectedSide, setSelectedSide] = useState('all');
@@ -32,23 +24,26 @@ export function CardList({data}) {
   const [openedCard, setOpenedCard] = useState(null);
   const [selectedDisplay, setSelectedDisplay] = useState('table');
 
-  const cardActions = getCardActions(data.cards, cards, setCards);
+  const cardActions = getCardActions(cards, setCards);
 
   const getCardsToShow = () => {
     const start = (page - 1) * 100;
     const end = (page * 100) - 1;
-    return cards.slice(start, end);
+    return filteredCards.slice(start, end);
   }
 
   useEffect(() => {
-    const filteredCards = findCards(data.cards, selectedSets, selectedTypes, inInventory, selectedSide, searchText, sort);
-    setCards(filteredCards);
+    const filteredCards = filterCards(cards, selectedSets, selectedTypes, inInventory, selectedSide, searchText, sort);
+    setFilteredCards(filteredCards);
+  }, [cards, selectedSets, selectedTypes, inInventory, selectedSide, searchText, sort]);
+
+  useEffect(() => {
     setPage(1);
-  }, [selectedSets, selectedTypes, inInventory, selectedSide, searchText, sort]);
+  }, [selectedSets, selectedTypes, inInventory, selectedSide, searchText, sort, selectedDisplay]);
 
   useEffect(() => {
     ReactTooltip.rebuild();
-  }, [cards, page, selectedDisplay]);
+  }, [filteredCards, page, selectedDisplay]);
 
   return (
     <>
@@ -70,7 +65,7 @@ export function CardList({data}) {
       <CardListInfo
         page={page}
         setPage={setPage}
-        cards={cards}
+        cards={filteredCards}
         inInventory={inInventory}
       />
       <CardListResults
@@ -81,8 +76,12 @@ export function CardList({data}) {
         setOpenedCard={setOpenedCard}
         cardActions={cardActions}
       />
-      <CardTooltip cardDB={data.cards} />
-      <CardModal openedCard={openedCard} setOpenedCard={setOpenedCard} />
+      <CardTooltip cards={cards} />
+      <CardModal
+        openedCard={openedCard} 
+        setOpenedCard={setOpenedCard}
+        cardActions={cardActions}
+      />
     </>
   );
 }
