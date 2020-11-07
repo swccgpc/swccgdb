@@ -28,17 +28,21 @@
                 modal = $('#cardModal');
         if(!card)
             return;
-
+        if (app.hasOwnProperty('deck')) {
+          card.inventory_qty = app.deck.card_qty_in_inventory(card);
+        }
         modal.data('code', code);
         modal.find('.card-modal-link').attr('href', card.url);
         modal.find('h3.modal-title').html(app.format.name(card));
         modal.find('.modal-image').html('<img class="img-responsive" src="' + card.image_url + '">');
-        modal.find('.modal-info').html(
-                '<div class="card-info"><p>' + app.format.info(card) + '</p></div>'
-                + '<div class="card-traits">' + app.format.traits(card) + '</div>'
-                + '<div class="card-text border-' + card.side_code + '">' + app.format.text(card) + '</div>'
-                + '<div class="card-set"><p>' + app.format.set(card) + '</p></div>'
-                );
+        var modal_info = '<div class="card-info"><p>' + app.format.info(card) + '</p></div>'
+          + '<div class="card-traits">' + app.format.traits(card) + '</div>'
+          + '<div class="card-text border-' + card.side_code + '">' + app.format.text(card) + '</div>'
+          + '<div class="card-set"><p>' + app.format.set(card) + '</p></div>';
+        if (card.hasOwnProperty('inventory_qty')) {
+          modal_info += '<h5>Inventory Qty: ' + card.inventory_qty + '</h5>';
+        }
+        modal.find('.modal-info').html(modal_info);
 
         var qtyelt = modal.find('.modal-qty');
         if(qtyelt) {

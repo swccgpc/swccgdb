@@ -297,6 +297,14 @@ ol {
 .deck-content .invalid-card {
     text-decoration: line-through;
 }
+.deck-content .missing-card {
+    font-weight: bold;
+    color: darksalmon;
+}
+.deck-missing {
+    font-style: italic;
+    font-size: 12px;
+}
 
 /********** DECK EDITOR ************/
 

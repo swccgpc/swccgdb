@@ -7,6 +7,7 @@
             date_update,
             description_md,
             id,
+            inventory_qty = false,
             name,
             tags,
             side_code,
@@ -23,6 +24,7 @@
             card_line_tpl = _.template('<a href="<%= card.url %>" class="card card-tip" data-toggle="modal" data-remote="false" data-target="#cardModal" data-code="<%= card.code %>"><%= card.label %></a>'),
             layouts = {},
             layout_data = {};
+
 
     /*
      * Templates for the different deck layouts, see deck.get_layout_data
@@ -47,6 +49,7 @@
         side_name = data.side_name;
         unsaved = data.unsaved;
         user_id = data.user_id;
+        deck.load_inventory_qty();
 
         if(app.data.isLoaded) {
             deck.set_slots(data.slots);
@@ -57,6 +60,21 @@
             });
         }
     };
+
+    deck.load_inventory_qty = function load_inventory_qty() {
+      $.ajax({
+        async: false,
+        url: Routing.generate('inventory_quantities'),
+        success: function (response, textStatus, jqXHR) {
+          if (Object.keys(response).length > 0) {
+            deck.inventory_qty = response;
+          }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+          console.log('error when requesting card quantitiess', errorThrown);
+        }
+      });
+    }
 
     /**
      * Sets the slots of the deck
@@ -263,6 +281,9 @@
         deck.update_layout_section(data, 'meta', $('<div class="deck-side">' + side_name + ' side</div>'));
         deck.update_layout_section(data, 'meta', drawDeckSection);
         deck.update_layout_section(data, 'meta', $('<div class="deck-sets"><span data-toggle="tooltip" data-placement="right" title="' + _.map(deck.get_included_sets(), function (set) { return set.name+(set.quantity > 1 ? ' ('+set.quantity+')' : ''); }).join(', ') + '">' + deck.get_included_sets().length + ' sets required </span>' + '</div>'));
+        if (deck.inventory_qty) {
+          deck.update_layout_section(data, 'meta', $('<div class="deck-missing"><span class="missing-card">*</span> = missing cards / qty in ().</div>'));
+        }
         if(problem) {
             deck.update_layout_section(data, 'meta', $('<div class="text-danger small"><span class="fa fa-exclamation-triangle"></span> ' + problem_labels[problem] + '</div>'));
         }
@@ -301,6 +322,13 @@
             {
                 var $div = $('<div>').addClass(deck.can_include_card(card) ? '' : 'invalid-card');
                 $div.append($(card_line_tpl({card: card})));
+                if (deck.inventory_qty) {
+                  var card_inventory_qty = deck.card_qty_in_inventory(card);
+                  var card_qty_diff = card_inventory_qty - card.indeck;
+                  if (card_qty_diff < 0) {
+                    $div.append(` <span class="missing-card">*</span> (${card_qty_diff})`);
+                  }
+                }
                 $div.prepend(card.indeck + 'x ');
                 $div.appendTo(section);
             });
@@ -438,6 +466,19 @@
             return !deck.can_include_card(card);
         });
     };
+
+    /**
+      * returns the inventory qty for this card.
+      * @memberOf deck
+      */
+    deck.card_qty_in_inventory = function card_qty_in_inventory(card)
+    {
+      var card_inventory_qty = 0;
+      if (deck.inventory_qty.hasOwnProperty(card.code)) {
+        card_inventory_qty = deck.inventory_qty[card.code];
+      }
+      return card_inventory_qty;
+    }
 
     /**
      * returns true if the deck can include the card as parameter
