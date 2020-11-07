@@ -88,6 +88,7 @@ class SlotCollectionDecorator implements \AppBundle\Model\SlotCollectionInterfac
                         'character' => [],
                         'creature' => [],
                         'device' => [],
+                        'defensive-shield' => [],
                         'effect' => [],
                         'epic-event' => [],
                         'interrupt' => [],
