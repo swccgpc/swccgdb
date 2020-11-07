@@ -44,8 +44,8 @@ function filterByInInventory(cards, inInventory) {
 
 function filterBySearchText(cards, searchText) {
   if (searchText != '') {
-    return cards.filter(card => card.name.includes(searchText));
-    filters.name = new RegExp(searchText, 'i');
+    const text = new RegExp(searchText, 'i');
+    return cards.filter(card => card.name.match(text));
   }
   return cards;
 }
