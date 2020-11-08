@@ -474,7 +474,7 @@
     deck.card_qty_in_inventory = function card_qty_in_inventory(card)
     {
       var card_inventory_qty = 0;
-      if (deck.inventory_qty.hasOwnProperty(card.code)) {
+      if (deck.hasOwnProperty('inventory_qty') && deck.inventory_qty.hasOwnProperty(card.code)) {
         card_inventory_qty = deck.inventory_qty[card.code];
       }
       return card_inventory_qty;
