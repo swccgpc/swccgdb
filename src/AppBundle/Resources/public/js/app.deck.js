@@ -326,7 +326,7 @@
                   var card_inventory_qty = deck.card_qty_in_inventory(card);
                   var card_qty_diff = card_inventory_qty - card.indeck;
                   if (card_qty_diff < 0) {
-                    $div.append(` <span class="missing-card">*</span> (${card_qty_diff})`);
+                    $div.append(' <span class="missing-card">*</span> (' + card_qty_diff + ')');
                   }
                 }
                 $div.prepend(card.indeck + 'x ');

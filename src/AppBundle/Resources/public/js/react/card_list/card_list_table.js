@@ -50,7 +50,7 @@ export function CardListTable({cards, sort, setSort, setOpenedCard, cardActions}
   return (
     <div class="row" id="collection">
       <div class="col-sm-12">
-        <table class="table table-condensed table-hover" style="margin-bottom:10px">
+        <table class="table table-hover" style="margin-bottom:10px">
           <thead>
             <tr>
               <th class="actions"></th>

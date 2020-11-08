@@ -717,7 +717,7 @@ article.review .review-comment {
   background-color: rgba(0, 0, 0, .5);
 }
 .card-row td.actions {
-  width: 72px;
+  width: 120px;
 }
 .icon-loader span{
   display: inline-block;
