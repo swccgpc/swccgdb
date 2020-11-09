@@ -5,6 +5,7 @@ import {CardListImportExportLinks} from './card_list_import_export_links';
 import {CardListFilters} from './card_list_filters';
 import {CardListInfo} from './card_list_info';
 import {CardListResults} from './card_list_results';
+import {CardListPager} from './card_list_pager';
 import {CardTooltip} from './card_tooltip';
 import {CardModal} from './card_modal';
 import {filterCards} from '../helpers/card';
@@ -77,6 +78,12 @@ export function CardList({sets, cards, setCards}) {
         setSort={setSort}
         setOpenedCard={setOpenedCard}
         cardActions={cardActions}
+      />
+      <CardListPager
+        page={page}
+        setPage={setPage}
+        cardCount={filteredCards.length}
+        isFooter={true}
       />
       <CardTooltip cards={cards} />
       <CardModal
