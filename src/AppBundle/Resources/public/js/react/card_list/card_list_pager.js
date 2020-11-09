@@ -17,7 +17,7 @@ export function CardListPager({page, setPage, cardCount, isFooter}) {
 
   const prev = page > 1 ? <li><a href="#" name='prev' class='pager--prev' onClick={handleClick}>« prev</a></li> : '';
   const next = (page * 100) - 1 < cardCount ? <li><a href="#" name='next' class='pager--next' onClick={handleClick}>next »</a></li> : '';
-  const colClass = isFooter ? 'col-sm-12' : 'col-sm-3';
+  const colClass = isFooter ? 'col-sm-12' : 'col-sm-4';
 
   return (
     <div class={`${colClass} text-right inventory-pager`}>
