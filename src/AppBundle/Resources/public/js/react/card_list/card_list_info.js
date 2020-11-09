@@ -16,7 +16,7 @@ export function CardListInfo({page, setPage, cards, inInventory}) {
 
   return (
     <div class="row inventory-info">
-      <div class="col-sm-6 inventory-totals">
+      <div class="col-sm-9 inventory-totals">
         <ol class="breadcrumb">
           <li># Cards <span class="badge">{cardCount}</span></li>
           <li>In Inventory <span class="badge">{invCardsCount}</span></li>
