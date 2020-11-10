@@ -13,7 +13,7 @@ import {getCardActions} from '../helpers/card_actions';
 
 export function CardList({sets, cards, setCards}) {
   const [filteredCards, setFilteredCards] = useState([]);
-  const [selectedSets, setSelectedSets] = useState([]);
+  const [selectedSets, setSelectedSets] = useState(['all']);
   const [selectedTypes, setSelectedTypes] = useState([]);
   const [inInventory, setInInventory] = useState('in');
   const [selectedSide, setSelectedSide] = useState('all');
@@ -35,7 +35,7 @@ export function CardList({sets, cards, setCards}) {
   }
 
   useEffect(() => {
-    const filteredCards = filterCards(cards, selectedSets, selectedTypes, inInventory, selectedSide, searchText, sort);
+    const filteredCards = filterCards(cards, sets, selectedSets, selectedTypes, inInventory, selectedSide, searchText, sort);
     setFilteredCards(filteredCards);
   }, [cards, selectedSets, selectedTypes, inInventory, selectedSide, searchText, sort]);
 

@@ -21,7 +21,17 @@ function App(props) {
       }
       return card;
     });
-    setSets(setsResponse.data);
+    const sets = [
+      {
+        name: 'All (no virtual)',
+        code: 'all',
+      },
+      {
+        name: 'All (with virtual)',
+        code: 'allplusvirtual',
+      },
+    ];
+    setSets(sets.concat(setsResponse.data));
     setCards(cardsWithQtys);
     setDataLoaded(true);
   }, []);

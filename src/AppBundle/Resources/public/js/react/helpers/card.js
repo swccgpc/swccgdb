@@ -1,9 +1,9 @@
 import React from 'react';
 import {h} from 'preact';
 
-export function filterCards(cards, sets, types, inInventory, selectedSide, searchText, sorts) {
+export function filterCards(cards, sets, selectedSets, types, inInventory, selectedSide, searchText, sorts) {
   let filteredCards = filterBySide(cards, selectedSide);
-  filteredCards = filterBySet(filteredCards, sets); 
+  filteredCards = filterBySet(filteredCards, sets, selectedSets); 
   filteredCards = filterByType(filteredCards, types);
   filteredCards = filterByInInventory(filteredCards, inInventory);
   filteredCards = filterBySearchText(filteredCards, searchText);
@@ -18,9 +18,18 @@ function filterBySide(cards, side) {
   return cards
 }
 
-function filterBySet(cards, sets) {
-  if (sets.length > 0) {
-    return cards.filter(card => sets.includes(card.set_code));
+function filterBySet(cards, sets, selectedSets) {
+  if (selectedSets.length > 0 && !selectedSets.includes('allplusvirtual')) {
+    if (selectedSets.includes('all')) {
+      const nonVirtualSetCycles = [1, 2];
+      return cards.filter(card => {
+        const set = sets.find(set => set.code == card.set_code);
+        return nonVirtualSetCycles.includes(set.cycle_position)
+      });
+    }
+    else {
+      return cards.filter(card => selectedSets.includes(card.set_code));
+    }
   }
   return cards;
 }

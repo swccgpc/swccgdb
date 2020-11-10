@@ -3,15 +3,26 @@ import {h} from 'preact';
 
 export function CardListFilterSets({sets, selectedSets, setSelectedSets}) {
   const handleChange = (event) => {
+    const name = event.target.name;
     if (event.target.checked) {
-      selectedSets.push(event.target.name);
-    } else {
-      const index = selectedSets.indexOf(event.target.name);
-      if (index !== -1) {
-        selectedSets.splice(index, 1);
+      selectedSets.push(name);
+      if (name === 'all' || name === 'allplusvirtual') {
+        selectedSets = [name];
+      } else {
+        removeSelectedSet('all');
+        removeSelectedSet('allplusvirtual');
       }
+    } else {
+      removeSelectedSet(name);
     }
     setSelectedSets([...selectedSets]);
+  }
+
+  const removeSelectedSet = (name) => {
+    const index = selectedSets.indexOf(name);
+    if (index !== -1) {
+      selectedSets.splice(index, 1);
+    }
   }
 
   const handleClick = (event) => {
