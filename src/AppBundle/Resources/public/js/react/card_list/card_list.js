@@ -30,7 +30,7 @@ export function CardList({sets, cards, setCards}) {
 
   const getCardsToShow = () => {
     const start = (page - 1) * 100;
-    const end = (page * 100) - 1;
+    const end = (page * 100);
     return filteredCards.slice(start, end);
   }
 

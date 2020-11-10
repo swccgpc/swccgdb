@@ -18,10 +18,17 @@ export function CardListFilterTypes({selectedSide,selectedTypes, setSelectedType
     const name = event.target.getAttribute('name');
     if (!selectedTypes.includes(name)) {
       selectedTypes.push(name);
+      if (name === 'character') {
+        selectedTypes.push('creature');
+      }
     } else {
       const index = selectedTypes.indexOf(name);
       if (index !== -1) {
         selectedTypes.splice(index, 1);
+        if (name === 'character') {
+          const charIndex = selectedTypes.indexOf('creature');
+          selectedTypes.splice(charIndex, 1);
+        }
       }
     }
     setSelectedTypes([...selectedTypes]);

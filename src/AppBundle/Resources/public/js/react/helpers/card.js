@@ -27,9 +27,6 @@ function filterBySet(cards, sets) {
 
 function filterByType(cards, types) {
     if (types.length > 0) {
-      if (types.includes('character')) {
-        types.push('creature');
-      }
       return cards.filter(card => types.includes(card.type_code));
     }
     return cards;
