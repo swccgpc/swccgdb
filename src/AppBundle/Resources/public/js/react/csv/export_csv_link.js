@@ -39,6 +39,7 @@ function formatCSVData(data) {
     set_name: "set",
     type_name: "type",
     subtype_name: "subtype",
+    rarity_name: "rarity",
     inventory_qty: "qty",
   };
 
