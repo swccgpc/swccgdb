@@ -30,3 +30,7 @@ dark-jedi-master-imperial)
 Production Assets:
 1. ./bin/console assetic:dump --env=prod --no-debug
 2. yarn encore production
+
+Clearing Production Cache:
+./bin/console cache:clear --env=prod --no-debug
+./bin/console cache:warmup --env=prod --no-debug
