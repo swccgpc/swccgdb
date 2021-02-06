@@ -1,6 +1,7 @@
 <?php
 
 namespace AppBundle\Model;
+use \AppBundle\Services\CardFormatter;
 
 class ExportableDeck
 {

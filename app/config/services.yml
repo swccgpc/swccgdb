@@ -62,6 +62,9 @@ services:
         public: true
         class: AppBundle\Services\CardsData
         arguments: ["@doctrine", "@request_stack", "@router", "@assets.packages", "@translator", "%kernel.root_dir%"]
+    card_formatter:
+        class: AppBundle\Services\CardFormatter
+        arguments: ["@doctrine", "@router", "%kernel.root_dir%"]
     decklist_manager:
         class: AppBundle\Model\DecklistManager
         shared: false
@@ -77,3 +80,6 @@ services:
         public: true
         class: AppBundle\Helper\DeckValidationHelper
         arguments: ["@agenda_helper", "@translator"]
+    tts_exporter:
+        class: AppBundle\Services\TTSExporter
+        arguments: ["@card_formatter", "@request_stack", "@texts", "%kernel.project_dir%"]

@@ -122,6 +122,7 @@ decks:
     labelswitch: Click to switch to this tag. Shift-click to toggle this tag.
     download:
       text: Text file
+      tts: TTS JSON file
       octgn: Octgn file
   modals:
     card:

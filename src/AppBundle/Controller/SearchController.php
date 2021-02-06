@@ -335,7 +335,7 @@ class SearchController extends Controller
             for ($rowindex = $first; $rowindex < $last && $rowindex < count($rows); $rowindex++) {
                 $card = $rows[$rowindex];
                 $set = $card->getSet();
-                $cardinfo = $this->get('cards_data')->getCardInfo($card, false);
+                $cardinfo = $this->get('card_formatter')->getCardInfo($card, false);
                 if (empty($availability[$set->getCode()])) {
                     $availability[$set->getCode()] = false;
                     if ($set->getDateRelease() && $set->getDateRelease() <= new \DateTime()) {
