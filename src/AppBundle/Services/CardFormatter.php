@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class CardFormatter
 {
-    private $card_image_base_url = "https://scomp.starwarsccg.org/cards/starwars/";
+    private $card_image_base_url = "https://res.starwarsccg.org/cards/Images-HT/starwars/";
 
     public function __construct(Registry $doctrine, Router $router, $rootDir)
     {
