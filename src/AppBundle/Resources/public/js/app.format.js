@@ -72,7 +72,7 @@
     {
         var text = card.gametext || '';
         text = text.replace(/\[(\w+)\]/g, '<span class="icon-$1"></span>')
-        text = text.split("\n").join('</p><p>');
+        text = text.replace(new RegExp("\\\\n", "g"), "<br />");
         return '<p>' + text + '</p>';
     };
 
