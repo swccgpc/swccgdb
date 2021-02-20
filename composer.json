@@ -44,6 +44,7 @@
         "symfony/swiftmailer-bundle": "^2.6.4",
         "symfony/symfony": "3.4.*",
         "symfony/templating": "^3",
+        "symfony/webpack-encore-bundle": "^1.7",
         "twig/twig": "^2.4",
         "willdurand/js-translation-bundle": "^2.6"
     },

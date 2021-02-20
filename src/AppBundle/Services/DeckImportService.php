@@ -32,10 +32,21 @@ class DeckImportService
         $lines = explode("\n", $text);
 
         foreach ($lines as $line) {
+            if (substr($line, 0, 6) === 'Side: ') {
+              $sideName = str_replace('Side: ', '', $line);
+              $side = $this->em->getRepository('AppBundle:Side')->findOneByName(trim($sideName));
+              if (!$side) {
+                throw new \Exception("Card import must have a side defined as 'Side: sidename'");
+              }
+              $data['side'] = $side;
+              continue;
+            }
             $matches = [];
-            if (preg_match('/^\s*(\d)x?([\pLl\pLu\pN\-\.\'\!\: ]+)/u', $line, $matches)) {
+            $setName = null;
+            if (preg_match('/^\s*(\d+)x?([\pLl\pLu\pN\-\.\'\!\:\,\&( \(*\))?]+)\[?([a-zA-Z0-9_ ]+)?\]?/', $line, $matches)) {
                 $quantity = intval($matches[1]);
                 $name = trim($matches[2]);
+                $setName = array_key_exists(3, $matches) ? trim($matches[3]) : null;
             } elseif (preg_match('/^([^\(]+).*x(\d)/', $line, $matches)) {
                 $quantity = intval($matches[2]);
                 $name = trim($matches[1]);
@@ -45,18 +56,16 @@ class DeckImportService
             } else {
                 continue;
             }
-            $card = $this->em->getRepository('AppBundle:Card')->findOneBy(array(
-                'name' => $name
-            ));
+            $params = [
+              'name' => $name,
+              'side' => $data['side'],
+            ];
+            if ($setName !== null) {
+              $params['set'] = $this->em->getRepository('AppBundle:Set')->findOneBy(['name' => $setName]);
+            }
+            $card = $this->em->getRepository('AppBundle:Card')->findOneBy($params);
             if ($card) {
-                $data['content'][$card->getCode()] = $quantity;
-            } else {
-                $side = $this->em->getRepository('AppBundle:Side')->findOneBy(array(
-                    'name' => $name
-                ));
-                if ($side) {
-                    $data['side'] = $side;
-                }
+              $data['content'][$card->getCode()] = $quantity;
             }
         }
 

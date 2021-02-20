@@ -53,9 +53,10 @@
 												<img src="{{ card.image_url2 }}" class="img-responsive"/>
 											</div>
 										</div>
-									</div>
-								{% else %}
-									<div class="card{{ (card.subtype_code == 'site' or card.is_horizontal == true) ? ' horizontal' }}">
+            </div>
+            {% else %}
+            <div
+              class="card{{((card.subtype_code is defined and card.subtype_code == 'site') or card.is_horizontal == true) ? ' horizontal' }}">
 										<img src="{{ card.image_url }}" alt="{{ card.name }}" class="img-responsive"/>
 									</div>
 								{% endif %}

@@ -50,6 +50,7 @@ twig:
         google_analytics_tracking_code: "%google_analytics_tracking_code%"
         google_adsense_client: "%google_adsense_client%"
         google_adsense_slot: "%google_adsense_slot%"
+        card_image_base_url: "https://res.starwarsccg.org/cards/Images-HT/starwars/"
     form_themes:
         - 'bootstrap_3_layout.html.twig'
 
@@ -152,3 +153,7 @@ nelmio_cors:
             allow_origin: ['*']
             allow_methods: ['GET']
             max_age: 3600
+
+# Webpack Encore Configuration
+webpack_encore:
+    output_path: "%kernel.project_dir%/web/assets/js"

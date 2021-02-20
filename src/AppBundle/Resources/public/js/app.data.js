@@ -6,7 +6,7 @@
     var locale_changed = false;
 
     var fdb = new ForerunnerDB();
-    var database = fdb.db('thronesdb');
+    var database = fdb.db('swccgdb');
     var masters = {
         sets: database.collection('master_set', {primaryKey: 'code'}),
         cards: database.collection('master_card', {primaryKey: 'code'})
@@ -129,7 +129,7 @@
         // if it is a force update, we haven't release the data yet
         if (!data.isLoaded) {
             release();
-        }
+        } 
     }
 
     /**
@@ -200,7 +200,9 @@
     }
 
     $(function () {
-        load();
+        if ($('#inventory').size() === 0) {
+            load();
+        }
     });
 
 })(app.data = {}, jQuery);
