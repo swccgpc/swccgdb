@@ -11,24 +11,41 @@ SWCCGDB
 * If you want to fix a mistake in some card data, or add the data of a new card, you can [submit a pull request](https://github.com/swccgpc/swccgdb-json-data/pulls).
 
 ---------
-Dev setup:
 
-1. Clone the repo.
-2. composer install
-3. ./bin/console doctrine:database:create
-4. ./bin/console doctrine:schema:create
-5. Clone https://github.com/swccgpc/swccgdb-json-data
-6. ./bin/console app:import:std /path/to/swccgdb-json-data/
-** May need to fix some data inconsistencies (ex. jedi-master-imperial ->
-dark-jedi-master-imperial)
-7. ./bin/console assetic:dump (or assetic:watch if editing CSS/JS)
-8. yarn encore dev (or yarn encore dev --watch if editing React JS)
-9. ./bin/console server:run
+## Dev setup:
 
-Production Assets:
-1. ./bin/console assetic:dump --env=prod --no-debug
-2. yarn encore production
+```bash
+## git clone https://github.com/swccgpc/swccgdb-json-data
 
-Clearing Production Cache:
+## fork this repo
+## git clone repo
+## cd swccgdb
+composer install
+./bin/console doctrine:database:create
+./bin/console doctrine:schema:create
+./bin/console app:import:std /path/to/swccgdb-json-data/
+## May need to fix some data inconsistencies
+## for example: rename jedi-master-imperial to dark-jedi-master-imperial
+./bin/console assetic:dump (or assetic:watch if editing CSS/JS)
+
+yarn encore dev
+## or, if editing ReactJS:
+yarn encore dev --watch
+
+./bin/console server:run
+```
+
+## Production Assets:
+
+```bash
+./bin/console assetic:dump --env=prod --no-debug
+yarn encore production
+```
+
+## Clearing Production Cache:
+
+```bash
 ./bin/console cache:clear --env=prod --no-debug
 ./bin/console cache:warmup --env=prod --no-debug
+```
+
