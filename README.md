@@ -1,8 +1,6 @@
 SWCCGDB
 =======
 
-> **DEPRECATED** :: The PHP version of the SWCCG Database has been replaced with a new NodeJS version. Please visit the `main` branch for the NodeJS version.
-
 ## [swccgdb.com](https://swccgdb.com)
 
 * This repository holds the source code.
