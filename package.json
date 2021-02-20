@@ -4,7 +4,7 @@
     "@symfony/webpack-encore": "^0.31.0"
   },
   "dependencies": {
-    "axios": "^0.20.0",
+    "axios": "^0.21.1",
     "forerunnerdb": "^2.0.22",
     "preact": "^10.5.3",
     "react-modal": "^3.11.2",
