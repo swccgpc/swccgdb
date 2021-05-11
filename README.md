@@ -1,6 +1,12 @@
 SWCCGDB
 =======
 
+>
+> ⚠️ **DEPRECATED** ⚠️
+>
+> Replaced by https://github.com/swccgpc/decks
+>
+
 ## [swccgdb.com](https://swccgdb.com)
 
 * This repository holds the source code.
