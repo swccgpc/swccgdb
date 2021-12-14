@@ -1,5 +1,9 @@
-SWCCGDB
-=======
+SWCCG Decks Server
+==================
+
+## Roadmap
+
+* [The roadmap of current and planned work is available on GitHub.](https://github.com/swccgpc/swccgdb/projects/1)
 
 ## Code
 * Forked from [ThronesDB](https://github.com/ThronesDB/thronesdb), which powers [ThronesDB.com](https://thronesdb.com)
