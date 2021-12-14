@@ -446,7 +446,7 @@ h1.site-title {
     font-family: 'Anton', sans-serif;
     position:relative;
     font-size:64px;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
     text-align:center;
     margin-top: 0;
 }

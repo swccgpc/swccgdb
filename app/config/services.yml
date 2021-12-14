@@ -4,6 +4,11 @@ parameters:
     #parameter_name: value
 
 services:
+    #App\Bridge\AwsCognitoClient:
+    #    arguments:
+    #        $poolId: '%env(COGNITO_POOL_ID)%'
+    #        $clientId: '%env(COGNITO_CLIENT_ID)%'
+
     # default configuration for services in *this* file
     _defaults:
         # automatically injects dependencies in your services

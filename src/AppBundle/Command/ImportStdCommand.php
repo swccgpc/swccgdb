@@ -14,9 +14,8 @@ use AppBundle\Entity\Cycle;
 use AppBundle\Entity\Set;
 use AppBundle\Entity\Card;
 
-class ImportStdCommand extends ContainerAwareCommand
-{
-    /* @var $em EntityManager */
+class ImportStdCommand extends ContainerAwareCommand {
+    /* @var $em Doctrine ORM EntityManager */
     private $em;
 
     /* @var $output OutputInterface */
@@ -24,23 +23,17 @@ class ImportStdCommand extends ContainerAwareCommand
 
     private $collections = [];
 
-    protected function configure()
-    {
+    protected function configure() {
         $this
         ->setName('app:import:std')
-        ->setDescription('Import cards data file in json format from a copy of https://github.com/Alsciende/thronesdb-json-data')
-        ->addArgument(
-                'path',
-                InputArgument::REQUIRED,
-                'Path to the repository'
-                )
-
+        ->setDescription('Import cards data file in json format')
+        ->addArgument('path', InputArgument::REQUIRED,
+                      'Path to the repository')
         ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
-        $path = $input->getArgument('path');
+    protected function execute(InputInterface $input, OutputInterface $output) {
+        $path     = $input->getArgument('path');
         $this->em = $this->getContainer()->get('doctrine')->getEntityManager();
         $this->output = $output;
 
@@ -52,12 +45,12 @@ class ImportStdCommand extends ContainerAwareCommand
         $output->writeln("Importing Sides...");
         $sidesFileInfo = $this->getFileInfo($path, 'sides.json');
         $imported = $this->importSidesJsonFile($sidesFileInfo);
-        if (count($imported)) {
-            $question = new ConfirmationQuestion("Do you confirm? (Y/n) ", true);
-            if (!$helper->ask($input, $output, $question)) {
-                die();
-            }
-        }
+        #if (count($imported)) {
+        #    $question = new ConfirmationQuestion("Do you confirm? (Y/n) ", true);
+        #    if (!$helper->ask($input, $output, $question)) {
+        #        die();
+        #    }
+        #}
         $this->em->flush();
         $this->loadCollection('Side');
         $output->writeln("Done.");
@@ -67,12 +60,12 @@ class ImportStdCommand extends ContainerAwareCommand
         $output->writeln("Importing Types...");
         $typesFileInfo = $this->getFileInfo($path, 'types.json');
         $imported = $this->importTypesJsonFile($typesFileInfo);
-        if (count($imported)) {
-            $question = new ConfirmationQuestion("Do you confirm? (Y/n) ", true);
-            if (!$helper->ask($input, $output, $question)) {
-                die();
-            }
-        }
+        #if (count($imported)) {
+        #    $question = new ConfirmationQuestion("Do you confirm? (Y/n) ", true);
+        #    if (!$helper->ask($input, $output, $question)) {
+        #        die();
+        #    }
+        #}
         $this->em->flush();
         $this->loadCollection('Type');
         $output->writeln("Done.");
@@ -82,12 +75,12 @@ class ImportStdCommand extends ContainerAwareCommand
         $output->writeln("Importing Subtypes...");
         $subtypesFileInfo = $this->getFileInfo($path, 'subtypes.json');
         $imported = $this->importSubtypesJsonFile($subtypesFileInfo);
-        if (count($imported)) {
-            $question = new ConfirmationQuestion("Do you confirm? (Y/n) ", true);
-            if (!$helper->ask($input, $output, $question)) {
-                die();
-            }
-        }
+        #if (count($imported)) {
+        #    $question = new ConfirmationQuestion("Do you confirm? (Y/n) ", true);
+        #    if (!$helper->ask($input, $output, $question)) {
+        #        die();
+        #    }
+        #}
         $this->em->flush();
         $this->loadCollection('Subtype');
         $output->writeln("Done.");
@@ -97,12 +90,12 @@ class ImportStdCommand extends ContainerAwareCommand
         $output->writeln("Importing Rarities...");
         $raritiesFileInfo = $this->getFileInfo($path, 'rarities.json');
         $imported = $this->importRaritiesJsonFile($raritiesFileInfo);
-        if (count($imported)) {
-            $question = new ConfirmationQuestion("Do you confirm? (Y/n) ", true);
-            if (!$helper->ask($input, $output, $question)) {
-                die();
-            }
-        }
+        #if (count($imported)) {
+        #    $question = new ConfirmationQuestion("Do you confirm? (Y/n) ", true);
+        #    if (!$helper->ask($input, $output, $question)) {
+        #        die();
+        #    }
+        #}
         $this->em->flush();
         $this->loadCollection('Rarity');
         $output->writeln("Done.");
@@ -112,12 +105,12 @@ class ImportStdCommand extends ContainerAwareCommand
         $output->writeln("Importing Cycles...");
         $cyclesFileInfo = $this->getFileInfo($path, 'cycles.json');
         $imported = $this->importCyclesJsonFile($cyclesFileInfo);
-        if (count($imported)) {
-            $question = new ConfirmationQuestion("Do you confirm? (Y/n) ", true);
-            if (!$helper->ask($input, $output, $question)) {
-                die();
-            }
-        }
+        #if (count($imported)) {
+        #    $question = new ConfirmationQuestion("Do you confirm? (Y/n) ", true);
+        #    if (!$helper->ask($input, $output, $question)) {
+        #        die();
+        #    }
+        #}
         $this->em->flush();
         $this->loadCollection('Cycle');
         $output->writeln("Done.");
@@ -128,12 +121,12 @@ class ImportStdCommand extends ContainerAwareCommand
         $setsFileInfo = $this->getFileInfo($path, 'sets.json');
         $imported = $this->importSetsJsonFile($setsFileInfo);
         $question = new ConfirmationQuestion("Do you confirm? (Y/n) ", true);
-        if (count($imported)) {
-            $question = new ConfirmationQuestion("Do you confirm? (Y/n) ", true);
-            if (!$helper->ask($input, $output, $question)) {
-                die();
-            }
-        }
+        #if (count($imported)) {
+        #    $question = new ConfirmationQuestion("Do you confirm? (Y/n) ", true);
+        #    if (!$helper->ask($input, $output, $question)) {
+        #        die();
+        #    }
+        #}
         $this->em->flush();
         $this->loadCollection('Set');
         $output->writeln("Done.");
@@ -146,21 +139,41 @@ class ImportStdCommand extends ContainerAwareCommand
         foreach ($fileSystemIterator as $fileinfo) {
             $imported = array_merge($imported, $this->importCardsJsonFile($fileinfo));
         }
-        if (count($imported)) {
-            $question = new ConfirmationQuestion("Do you confirm? (Y/n) ", true);
-            if (!$helper->ask($input, $output, $question)) {
-                die();
-            }
-        }
+        #if (count($imported)) {
+        #    $question = new ConfirmationQuestion("Do you confirm? (Y/n) ", true);
+        #    if (!$helper->ask($input, $output, $question)) {
+        #        die();
+        #    }
+        #}
         $this->em->flush();
         $output->writeln("Done.");
     }
 
-    protected function importSidesJsonFile(\SplFileInfo $fileinfo)
-    {
+    ##
+    ## [{"code": "light", "name": "Light"},
+    ##  {"code": "dark",  "name": "Dark" }]
+    ##
+    ## select * FROM side;
+    ## +----+-------+-------+
+    ## | id | code  | name  |
+    ## +----+-------+-------+
+    ## |  1 | light | Light |
+    ## |  2 | dark  | Dark  |
+    ## +----+-------+-------+
+    ##
+    ## https://www.php.net/manual/en/class.splfileinfo.php
+    ##
+    protected function importSidesJsonFile(\SplFileInfo $fileinfo) {
         $result = [];
 
+        ##
+        ## Read in json file and return hash
+        ##
         $list = $this->getDataFromFile($fileinfo);
+        ##
+        ## Parse hash
+        ## parse "code" and "name" fields.
+        ##
         foreach ($list as $data) {
             $side = $this->getEntityFromData('AppBundle\\Entity\\Side', $data, [
                     'code',
@@ -168,6 +181,9 @@ class ImportStdCommand extends ContainerAwareCommand
             ], [], []);
             if ($side) {
                 $result[] = $side;
+                ##
+                ## Write fields to database.
+                ##
                 $this->em->persist($side);
             }
         }
@@ -175,8 +191,7 @@ class ImportStdCommand extends ContainerAwareCommand
         return $result;
     }
 
-    protected function importTypesJsonFile(\SplFileInfo $fileinfo)
-    {
+    protected function importTypesJsonFile(\SplFileInfo $fileinfo) {
         $result = [];
 
         $list = $this->getDataFromFile($fileinfo);
@@ -194,8 +209,7 @@ class ImportStdCommand extends ContainerAwareCommand
         return $result;
     }
 
-    protected function importSubtypesJsonFile(\SplFileInfo $fileinfo)
-    {
+    protected function importSubtypesJsonFile(\SplFileInfo $fileinfo) {
         $result = [];
 
         $list = $this->getDataFromFile($fileinfo);
@@ -213,8 +227,7 @@ class ImportStdCommand extends ContainerAwareCommand
         return $result;
     }
 
-    protected function importRaritiesJsonFile(\SplFileInfo $fileinfo)
-    {
+    protected function importRaritiesJsonFile(\SplFileInfo $fileinfo) {
         $result = [];
 
         $list = $this->getDataFromFile($fileinfo);
@@ -232,8 +245,7 @@ class ImportStdCommand extends ContainerAwareCommand
         return $result;
     }
 
-    protected function importCyclesJsonFile(\SplFileInfo $fileinfo)
-    {
+    protected function importCyclesJsonFile(\SplFileInfo $fileinfo) {
         $result = [];
 
         $cyclesData = $this->getDataFromFile($fileinfo);
@@ -253,8 +265,7 @@ class ImportStdCommand extends ContainerAwareCommand
         return $result;
     }
 
-    protected function importSetsJsonFile(\SplFileInfo $fileinfo)
-    {
+    protected function importSetsJsonFile(\SplFileInfo $fileinfo) {
         $result = [];
 
         $setsData = $this->getDataFromFile($fileinfo);
@@ -277,8 +288,7 @@ class ImportStdCommand extends ContainerAwareCommand
         return $result;
     }
 
-    protected function importCardsJsonFile(\SplFileInfo $fileinfo)
-    {
+    protected function importCardsJsonFile(\SplFileInfo $fileinfo) {
         $result = [];
 
         $code = $fileinfo->getBasename('.json');
@@ -366,8 +376,7 @@ class ImportStdCommand extends ContainerAwareCommand
         return $result;
     }
 
-    protected function copyFieldValueToEntity($entity, $entityName, $fieldName, $newJsonValue)
-    {
+    protected function copyFieldValueToEntity($entity, $entityName, $fieldName, $newJsonValue) {
         $metadata = $this->em->getClassMetadata($entityName);
         $type = $metadata->fieldMappings[$fieldName]['type'];
 
@@ -404,8 +413,7 @@ class ImportStdCommand extends ContainerAwareCommand
         }
     }
 
-    protected function copyKeyToEntity($entity, $entityName, $data, $key, $isMandatory = true)
-    {
+    protected function copyKeyToEntity($entity, $entityName, $data, $key, $isMandatory = true) {
         $metadata = $this->em->getClassMetadata($entityName);
 
         if (!key_exists($key, $data)) {
@@ -425,8 +433,7 @@ class ImportStdCommand extends ContainerAwareCommand
         $this->copyFieldValueToEntity($entity, $entityName, $fieldName, $value);
     }
 
-    protected function getEntityFromData($entityName, $data, $mandatoryKeys, $foreignKeys, $optionalKeys)
-    {
+    protected function getEntityFromData($entityName, $data, $mandatoryKeys, $foreignKeys, $optionalKeys) {
         if (!key_exists('code', $data)) {
             throw new \Exception("Missing key [code] in ".json_encode($data));
         }
@@ -460,6 +467,12 @@ class ImportStdCommand extends ContainerAwareCommand
                 throw new \Exception("No collection for [$foreignEntityShortName] in ".json_encode($data));
             }
             if (!key_exists($foreignCode, $this->collections[$foreignEntityShortName])) {
+                print("\n\nValid Codes:\n");
+                #print_r($this->collections);
+                #foreach($this->collections as $row) {
+                #    var_dump($row);
+                #}
+                print("##############################\n");
                 throw new \Exception("Invalid code [$foreignCode] for key [$key] in ".json_encode($data));
             }
             $foreignEntity = $this->collections[$foreignEntityShortName][$foreignCode];
@@ -477,21 +490,39 @@ class ImportStdCommand extends ContainerAwareCommand
         }
     }
 
-    protected function getDataFromFile(\SplFileInfo $fileinfo)
-    {
+    ##
+    ## https://www.php.net/manual/en/class.splfileinfo.php
+    ##
+    protected function getDataFromFile(\SplFileInfo $fileinfo) {
+        ##
+        ## https://www.php.net/manual/en/splfileinfo.openfile.php
+        ##
         $file = $fileinfo->openFile('r');
         $file->setFlags(\SplFileObject::SKIP_EMPTY | \SplFileObject::DROP_NEW_LINE);
 
+        ##
+        ## Read in all lines of file
+        ##
         $lines = [];
         foreach ($file as $line) {
             if ($line !== false) {
                 $lines[] = $line;
             }
         }
+        ##
+        ## Convert file to string.
+        ##
         $content = implode('', $lines);
 
+        ##
+        ## parse string as a json
+        ## https://www.php.net/json_decode
+        ##
         $data = json_decode($content, true);
 
+        ##
+        ## if NOT proper json, throw error
+        ##
         if ($data === null) {
             throw new \Exception("File [".$fileinfo->getPathname()."] contains incorrect JSON (error code ".json_last_error().")");
         }
@@ -499,8 +530,7 @@ class ImportStdCommand extends ContainerAwareCommand
         return $data;
     }
 
-    protected function getFileInfo($path, $filename)
-    {
+    protected function getFileInfo($path, $filename) {
         $fs = new Filesystem();
 
         if (!$fs->exists($path)) {
@@ -516,8 +546,7 @@ class ImportStdCommand extends ContainerAwareCommand
         return new \SplFileInfo($filepath);
     }
 
-    protected function getFileSystemIterator($path)
-    {
+    protected function getFileSystemIterator($path) {
         $fs = new Filesystem();
 
         if (!$fs->exists($path)) {
@@ -539,14 +568,47 @@ class ImportStdCommand extends ContainerAwareCommand
         return $iterator;
     }
 
-    protected function loadCollection($entityShortName)
-    {
+    ##
+    ## Load Collection of cards from database
+    ## https://www.doctrine-project.org/projects/doctrine-orm/en/latest/reference/working-with-objects.html
+    ##
+    protected function loadCollection($entityShortName) {
         $this->collections[$entityShortName] = [];
 
+        ##
+        ## In Doctrine, a repository is a class that concentrates code 
+        ## responsible for querying and filtering your tables.
+        ##
+        ## The "entityShortName" is the name of the table in MySQL.
+        ## "findAll" will return all rows.
+        ## https://www.doctrine-project.org/projects/doctrine-orm/en/latest/tutorials/getting-started.html
+        ##
         $entities = $this->em->getRepository('AppBundle:'.$entityShortName)->findAll();
-
+        #error_reporting(E_ALL);
+        #ini_set('display_errors', True);
+        #print("$entityShortName entities");
+        #print("\n##################\n");
+        #print_r($entities);
+        #print("\n##################");
+        print("Loading $entityShortName collection\n");
         foreach ($entities as $entity) {
-            $this->collections[$entityShortName][$entity->getCode()] = $entity;
+            ##
+            ## "code" is a field in the table. Most tables have it.
+            ##
+            $code = $entity->getCode();
+            print("  * ".$entityShortName.": [".$code."]");
+            #print("\n##################\n");
+            #var_dump($entity);
+            #print("\n##################");
+            print("\n");
+            #die();
+            $this->collections[$entityShortName][$code] = $entity;
+            # object(AppBundle\Entity\Side)#756 (4) {
+            #   ["id":"AppBundle\Entity\Side":private]=> int(1)
+            #   ["code":"AppBundle\Entity\Side":private]=> string(5) "light"
+            #   ["name":"AppBundle\Entity\Side":private]=> string(5) "Light"
+            #   ["cards":"AppBundle\Entity\Side":private]=> object(Doctrine\ORM\PersistentCollection)#749 (9) {
         }
+        print("done.\n");
     }
 }

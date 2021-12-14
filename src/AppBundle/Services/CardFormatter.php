@@ -11,12 +11,10 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  *
  */
 
-class CardFormatter
-{
-    private $card_image_base_url = "https://res.starwarsccg.org/cards/Images-HT/starwars/";
+class CardFormatter {
+    private $card_image_base_url = ""; #"https://res.starwarsccg.org/cards/Images-HT/starwars/";
 
-    public function __construct(Registry $doctrine, Router $router, $rootDir)
-    {
+    public function __construct(Registry $doctrine, Router $router, $rootDir) {
         $this->doctrine = $doctrine;
         $this->router = $router;
         $this->rootDir = $rootDir;
@@ -27,8 +25,7 @@ class CardFormatter
      * @param string $text
      * @return string
      */
-    public function replaceSymbols($text)
-    {
+    public function replaceSymbols($text) {
         static $displayTextReplacements = [
             '[maintain]' => '<span class="icon-maintain"></span>',
             '[recycle]' => '<span class="icon-recycle"></span>',
@@ -43,8 +40,7 @@ class CardFormatter
      * @param string $text
      * @return string
      */
-    public function formatKeywords($text, $api = false)
-    {
+    public function formatKeywords($text, $api = false) {
         if ($api) {
           static $displayTextReplacements = [
               '\\b0' => '',
@@ -70,8 +66,7 @@ class CardFormatter
      * @param string $text
      * @return string
      */
-    public function formatUniqueness($text, $api = false)
-    {
+    public function formatUniqueness($text, $api = false) {
       if ($api) {
         static $displayTextReplacements = [
             '*' => '',
@@ -86,8 +81,7 @@ class CardFormatter
         return str_replace(array_keys($displayTextReplacements), array_values($displayTextReplacements), $text);
     }
 
-    public function splitInParagraphs($text)
-    {
+    public function splitInParagraphs($text) {
         if (empty($text)) {
             return '';
         }
@@ -111,8 +105,7 @@ class CardFormatter
      * @param string $api
      * @return multitype:multitype: string number mixed NULL unknown
      */
-    public function getCardInfo(Card $card, $api = false)
-    {
+    public function getCardInfo(Card $card, $api = false) {
         $cardinfo = [];
 
         $metadata = $this->doctrine->getManager()->getClassMetadata('AppBundle:Card');

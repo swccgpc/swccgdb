@@ -6,8 +6,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
-class SearchController extends Controller
-{
+class SearchController extends Controller {
+
     public static $searchKeys = array(
             ''  => 'code',
             'c' => 'cycle',
@@ -42,8 +42,10 @@ class SearchController extends Controller
             'y' => 'integer',
     );
 
-    public function formAction()
-    {
+
+
+
+    public function formAction() {
         $response = new Response();
         $response->setPublic();
         $response->setMaxAge($this->container->getParameter('cache_expiration'));
@@ -59,12 +61,12 @@ class SearchController extends Controller
         $rarities = $this->getDoctrine()->getRepository('AppBundle:Rarity')->findAll();
 
         $list_characteristics = $dbh->executeQuery("SELECT DISTINCT c.characteristics FROM card c WHERE c.characteristics != ''")->fetchAll();
-    		$characteristics = [];
+    	$characteristics = [];
         $displayTextReplacements = array('\\b0', '\\b');
     		foreach($list_characteristics as $card) {
     			$subs = explode(',', $card["characteristics"]);
     			foreach($subs as $sub) {
-            $sub = str_replace($displayTextReplacements, "", $sub);
+                    $sub = str_replace($displayTextReplacements, "", $sub);
     				$characteristics[trim($sub)] = 1;
     			}
     		}
@@ -84,8 +86,11 @@ class SearchController extends Controller
         ), $response);
     }
 
-    public function zoomAction($card_code, Request $request)
-    {
+    public function zoomAction($card_code, Request $request) {
+        print("DPH zoomAction: <b>Searching for card code</b>: [${card_code}]<br />");
+        print("DPH zoomAction: <b>Request</b>:<pre>");
+        var_dump($request);
+        print("</pre>");
         $card = $this->getDoctrine()->getRepository('AppBundle:Card')->findByCode($card_code);
         if (!$card) {
             throw $this->createNotFoundException('Sorry, this card is not in the database (yet?)');
@@ -95,6 +100,12 @@ class SearchController extends Controller
         $publisher_name = $this->container->getParameter('publisher_name');
 
         $meta = $card->getName().", a ".$card->getSide()->getName()." ".$card->getType()->getName()." card for $game_name from the set ".$card->getSet()->getName()." published by $publisher_name.";
+
+        print("DPH card:<pre>");
+        print($card->getName());
+        print("\n");
+        print($card->getCode());
+        print("</pre>");
 
         return $this->forward(
             'AppBundle:Search:display',
@@ -110,8 +121,7 @@ class SearchController extends Controller
         );
     }
 
-    public function listAction($set_code, $view, $sort, $page, Request $request)
-    {
+    public function listAction($set_code, $view, $sort, $page, Request $request) {
         $set = $this->getDoctrine()->getRepository('AppBundle:Set')->findByCode($set_code);
         if (!$set) {
             throw $this->createNotFoundException('This set does not exist');
@@ -141,8 +151,7 @@ class SearchController extends Controller
         );
     }
 
-    public function cycleAction($cycle_code, $view, $sort, $page, Request $request)
-    {
+    public function cycleAction($cycle_code, $view, $sort, $page, Request $request) {
         $cycle = $this->getDoctrine()->getRepository('AppBundle:Cycle')->findOneBy(array("code" => $cycle_code));
         if (!$cycle) {
             throw $this->createNotFoundException('This cycle does not exist');
@@ -175,8 +184,7 @@ class SearchController extends Controller
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function processAction(Request $request)
-    {
+    public function processAction(Request $request) {
         $view = $request->query->get('view') ?: 'list';
         $sort = $request->query->get('sort') ?: 'name';
 
@@ -228,8 +236,7 @@ class SearchController extends Controller
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function findAction(Request $request)
-    {
+    public function findAction(Request $request) {
         $q = $request->query->get('q');
         $page = $request->query->get('page') ?: 1;
         $view = $request->query->get('view') ?: 'list';
@@ -266,8 +273,10 @@ class SearchController extends Controller
         );
     }
 
-    public function displayAction($q, $view="card", $sort, $page=1, $pagetitle="", $meta="", Request $request)
-    {
+    public function displayAction($q, $view="card", $sort, $page=1, $pagetitle="", $meta="", Request $request) {
+        print("DPH displayAction:\n<pre>");
+        var_dump($q);
+        print("</pre>");
         $response = new Response();
         $response->setPublic();
         $response->setMaxAge($this->container->getParameter('cache_expiration'));
@@ -297,6 +306,9 @@ class SearchController extends Controller
 
         // reconstruction de la bonne chaine de recherche pour affichage
         $q = $this->get('cards_data')->buildQueryFromConditions($conditions);
+        #print("DPH <b>Conditions:</b><pre>");
+        #var_dump($conditions);
+        #print("</pre>");
         if ($q && $rows = $this->get('cards_data')->get_search_rows($conditions, $sort)) {
 
             if (count($rows) == 1) {
@@ -409,23 +421,21 @@ class SearchController extends Controller
         ), $response);
     }
 
-    public function setnavigation($card, $q, $view, $sort)
-    {
+    public function setnavigation($card, $q, $view, $sort) {
         $repo = $this->getDoctrine()->getRepository('AppBundle:Card');
         $prev = $repo->findPreviousCard($card);
         $next = $repo->findNextCard($card);
         return $this->renderView('AppBundle:Search:setnavigation.html.twig', array(
                 "prevtitle" => $prev ? $prev->getName() : "",
-                "prevhref" => $prev ? $this->get('router')->generate('cards_zoom', array('card_code' => $prev->getCode())) : "",
+                "prevhref"  => $prev ? $this->get('router')->generate('cards_zoom', array('card_code' => $prev->getCode())) : "",
                 "nexttitle" => $next ? $next->getName() : "",
-                "nexthref" => $next ? $this->get('router')->generate('cards_zoom', array('card_code' => $next->getCode())) : "",
-                "settitle" => $card->getSet()->getName(),
-                "sethref" => $this->get('router')->generate('cards_list', array('set_code' => $card->getSet()->getCode())),
+                "nexthref"  => $next ? $this->get('router')->generate('cards_zoom', array('card_code' => $next->getCode())) : "",
+                "settitle"  => $card->getSet()->getName(),
+                "sethref"   => $this->get('router')->generate('cards_list', array('set_code' => $card->getSet()->getCode())),
         ));
     }
 
-    public function paginationItem($q = null, $v, $s, $ps, $pi, $total)
-    {
+    public function paginationItem($q = null, $v, $s, $ps, $pi, $total) {
         return $this->renderView('AppBundle:Search:paginationitem.html.twig', array(
             "href" => $q == null ? "" : $this->get('router')->generate('cards_find', array('q' => $q, 'view' => $v, 'sort' => $s, 'page' => $pi)),
             "ps" => $ps,
@@ -435,8 +445,7 @@ class SearchController extends Controller
         ));
     }
 
-    public function pagination($pagesize, $total, $current, $q, $view, $sort)
-    {
+    public function pagination($pagesize, $total, $current, $q, $view, $sort) {
         if ($total < $pagesize) {
             $pagesize = $total;
         }

@@ -26,7 +26,7 @@ parameters:
     email_sender_name: ~
 
     # Branding
-    website_name: SW:CCG DB
+    website_name: SWCCG Decks
     website_url: swccgdb.com
     game_name: Star Wars CCG
     publisher_name: Decipher

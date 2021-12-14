@@ -2,6 +2,8 @@
 /app/config/parameters.yml
 /build/
 /phpunit.xml
+var/cache
+var/logs
 /var/*
 !/var/cache
 /var/cache/*
@@ -21,3 +23,4 @@ web/js
 web/assets/js
 web/images/ttsdecks
 node_modules
+.env

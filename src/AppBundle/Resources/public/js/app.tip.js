@@ -15,7 +15,7 @@
             var image = card.image_url ? '<div class="card-thumbnail card-thumbnail-' + card.type_code + ' ' + horizontalClass + '" style="background-image:url(' + card.image_url + ')"></div>' : "";
 
             content = image
-                    + '<h4 class="card-name">' + app.format.name(card) + '</h4>'
+                    + '<h4 class="card-name">DPH:' + app.format.name(card) + '</h4>'
                     + '<div class="card-info"><p>' + app.format.info(card) + '</p></div>'
                     + '<div class="card-text border-' + card.side_code + '">' + app.format.text(card) + '</div>'
                     + '<div class="card-set">' + app.format.set(card) + '</div>'

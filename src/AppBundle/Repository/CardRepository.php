@@ -36,13 +36,20 @@ class CardRepository extends EntityRepository
 
     public function findByCode($code)
     {
+        print("DPH <b>CardRepository->findByCode</b>:<pre>");
+        var_dump($code);
+        print("</pre>");
         $qb = $this->createQueryBuilder('c')
             ->select('c')
             ->andWhere('c.code = ?1');
 
         $qb->setParameter(1, $code);
 
-        return $qb->getQuery()->getOneOrNullResult();
+        $results = $qb->getQuery()->getOneOrNullResult();
+        #print("DPH <b>getQuery->getOneOrNullResult</b>:<pre>");
+        #var_dump($results);
+        #print("</pre>");
+        return $results;
     }
 
     public function findAllByCodes($codes)

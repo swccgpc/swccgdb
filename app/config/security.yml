@@ -9,8 +9,19 @@ security:
     providers:
         fos_userbundle:
             id: fos_user.user_provider.username_email
+        #app_user_provider:
+        #    id: App\Security\UserProvider
+
 
     firewalls:
+        main:
+            anonymous: true
+            #guard:
+            #    authenticators:
+            #        - App\Security\CognitoAuthenticator
+            logout:
+                path:   app_logout
+
         oauth_token:
             pattern:    ^/oauth/v2/token
             security:   false

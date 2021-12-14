@@ -1,65 +1,65 @@
 <!DOCTYPE html>
 <html lang="{{ app.request.locale }}">
-  <head>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-466128-5"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+<head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-466128-5"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
 
-      gtag('config', 'UA-466128-5');
-    </script>
+    gtag('config', 'UA-466128-5');
+  </script>
 
-    <title>{{ pagetitle|default('Deckbuilder') }} &middot; SW:CCG DB</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="mobile-web-app-capable" content="yes">
-    <link rel="shortcut icon" href="/favicon.ico"/>
-    <link rel="icon" sizes="192x192" href="/icon-192.png" />
-    <link rel="apple-touch-icon" sizes="120x120" href="/icon-120.png" />
-    {% set _route = app.request.attributes.get('_route') %}
-    {% set _get_params = app.request.attributes.get('_get_params')|default({}) %}
-    {% set _route_params = app.request.attributes.get('_route_params')|default({})|merge(_get_params) %}
-    {% if app.request.locale != "en" and _route != "" %}
-      <link rel="canonical" href="{{ url(_route, _route_params|merge({'_locale': 'en'})) }}"/>
-    {% endif %}
-    {% if pagedescription is defined %}<meta name="description" content="{{ pagedescription }}">{% endif %}
+  <title>{{ pagetitle|default('Deckbuilder') }} &middot; SWCCG Decks</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="shortcut icon" href="/favicon.ico"/>
+  <link rel="icon" sizes="192x192" href="/icon-192.png" />
+  <link rel="apple-touch-icon" sizes="120x120" href="/icon-120.png" />
+  {% set _route        = app.request.attributes.get('_route') %}
+  {% set _get_params   = app.request.attributes.get('_get_params')|default({}) %}
+  {% set _route_params = app.request.attributes.get('_route_params')|default({})|merge(_get_params) %}
+  {% if app.request.locale != "en" and _route != "" %}
+    <link rel="canonical" href="{{ url(_route, _route_params|merge({'_locale': 'en'})) }}"/>
+  {% endif %}
+  {% if pagedescription is defined %}<meta name="description" content="{{ pagedescription }}">{% endif %}
 
-    <link href='https://fonts.googleapis.com/css?family=Anton|Open+Sans:300,400,700|Open+Sans+Condensed:300,700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/qtip2/2.1.1/jquery.qtip.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-markdown/2.9.0/css/bootstrap-markdown.min.css">
-    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css" />
-    {% stylesheets filter="cssrewrite,scssphp" output="css/app.css"
-    	'bundles/app/css/bootstrap.css'
-    	'bundles/app/css/style.css'
-    	'bundles/app/css/icons.css'
-      'bundles/app/css/languages.css'
-    %}
-    <link rel="stylesheet" href="{{ asset_url }}" />
-	{% endstylesheets %}
-	<!--[if lt IE 9]>
-      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.js"></script>
-      <script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.js"></script>
-    <![endif]-->
-	{% block stylesheets %}{% endblock %}
-    <script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js"></script>
-    <script>
-      window.addEventListener("load", function(){
-        window.cookieconsent.initialise({
-          "palette": {
-            "popup": {
-              "background": "#000"
-            },
-            "button": {
-              "background": "#f1d600"
-            }
+  <link href='https://fonts.googleapis.com/css?family=Anton|Open+Sans:300,400,700|Open+Sans+Condensed:300,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/qtip2/2.1.1/jquery.qtip.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-markdown/2.9.0/css/bootstrap-markdown.min.css">
+  <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css" />
+  {% stylesheets filter="cssrewrite,scssphp" output="css/app.css"
+  	'bundles/app/css/bootstrap.css'
+  	'bundles/app/css/style.css'
+  	'bundles/app/css/icons.css'
+    'bundles/app/css/languages.css'
+  %}
+  <link rel="stylesheet" href="{{ asset_url }}" />
+{% endstylesheets %}
+<!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.js"></script>
+  <![endif]-->
+{% block stylesheets %}{% endblock %}
+  <script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js"></script>
+  <script>
+    window.addEventListener("load", function(){
+      window.cookieconsent.initialise({
+        "palette": {
+          "popup": {
+            "background": "#000"
+          },
+          "button": {
+            "background": "#f1d600"
           }
-        })});
-    </script>
-  </head>
-  <body>
+        }
+      })});
+  </script>
+</head>
+<body>
   <div id="wrapper">
       <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
       <div class="container">
@@ -70,7 +70,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="{{ path('index') }}">SW:CCG DB</a>
+          <a class="navbar-brand" href="{{ path('index') }}"><img style="width:75px;height:50px" src="https://res.starwarsccg.org/swccgpc_deckdb2.svg" /></a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
@@ -113,22 +113,29 @@
       </div>
     </nav>
 
-    <div class="text-center">
+    <!-- div class="text-center">
       <div class="alert alert-warning" role="alert">
-        <a href="/about">
-            Welcome to SW:CCG DB (Beta)
-        </a>
+        <a href="/about">Welcome to SW:CCG DB (Beta)</a>
       </div>
-    </div>
+    </div -->
 
 {% block body %}{% endblock %}
     <div id="push"></div>
   </div>
 
+  <style type="text/css">
+    footer,
+    div#footer-row {
+      background-color:rgb(34, 34, 34);
+      color:#ffffff;
+      font-family:'Anton', sans-serif;
+      text-align:center;
+    }
+  </style>
   <footer class="hidden-print">
     <div class="container">
 
-      <div class="row">
+      <!-- div class="row" id="footer-navbar">
         <div class="col-xs-12">
           <ul class="list-inline">
             <li><a href="{{ path('about') }}">About</a></li>
@@ -136,27 +143,12 @@
             <li><a href="{{ path('donators') }}">Donators</a> <span class="fa fa-gift donator" title="The Gracious Donator"></span></li>
           </ul>
         </div>
-      </div>
+      </div -->
 
-      <div class="row" style="margin-bottom:2em">
-        <div class="col-md-8">
-          <p>
-          Original design by Alsciende (<a href="https://netrunnerdb.com" target="_blank">NetrunnerDB</a> and <a href="https://thronesdb.com" target="_blank">ThronesDB</a>).
-          </p>
-          <p>
-          Modified and adapted to Star Wars CCG by <a href="https://github.com/PrestonStahley">Preston S</a>.
-          </p>
-          <p>
-          Please post bug reports and feature requests on <a href="https://github.com/PrestonStahley/swccgdb/issues">GitHub</a>.
-          </p>
-          </div>
-          <div class="col-md-4">
-          <p>
-          The information presented on this site about the Star Wars Customizable Card Game, both literal and graphical, is copyright 1995 - 2001 Decipher, Inc.
-          This website is not produced, endorsed, supported, or affiliated with Decipher, Inc.
-          </p>
-
-          </div>
+      <div class="row" id ="footer-row">
+        <div class="col-md-12">
+          <a href="https://www.starwarsccg.org/" style="text-decoration:underline;color:white">&copy;2021, Star Wars Players Committee. All Rights Reserved.</a>
+        </div>
       </div>
 
     </div>
@@ -201,21 +193,21 @@
 		'@AppBundle/Resources/public/js/app.tip.js'
 		'@AppBundle/Resources/public/js/app.card_modal.js'
 		'@AppBundle/Resources/public/js/app.user.js'
-                '@AppBundle/Resources/public/js/app.binomial.js'
-                '@AppBundle/Resources/public/js/app.hypergeometric.js'
-                '@AppBundle/Resources/public/js/app.draw_simulator.js'
-                '@AppBundle/Resources/public/js/app.textcomplete.js'
-                '@AppBundle/Resources/public/js/app.markdown.js'
-                '@AppBundle/Resources/public/js/app.smart_filter.js'
-                '@AppBundle/Resources/public/js/app.deck.js'
-                '@AppBundle/Resources/public/js/app.diff.js'
-                '@AppBundle/Resources/public/js/app.deck_history.js'
-                '@AppBundle/Resources/public/js/app.deck_charts.js'
+    '@AppBundle/Resources/public/js/app.binomial.js'
+    '@AppBundle/Resources/public/js/app.hypergeometric.js'
+    '@AppBundle/Resources/public/js/app.draw_simulator.js'
+    '@AppBundle/Resources/public/js/app.textcomplete.js'
+    '@AppBundle/Resources/public/js/app.markdown.js'
+    '@AppBundle/Resources/public/js/app.smart_filter.js'
+    '@AppBundle/Resources/public/js/app.deck.js'
+    '@AppBundle/Resources/public/js/app.diff.js'
+    '@AppBundle/Resources/public/js/app.deck_history.js'
+    '@AppBundle/Resources/public/js/app.deck_charts.js'
 		'@AppBundle/Resources/public/js/app.ui.js'
     %}
 	<script src="{{ asset_url }}"></script>
 	{% endjavascripts %}
 
 	{% block javascripts %}{% endblock %}
-    </body>
+</body>
 </html>
