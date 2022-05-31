@@ -32,6 +32,9 @@ cd swccg-card-json
 
 ## Dev setup:
 
+* **Symfony** can run in `DEBUG` mode for local development purposes.
+* When running in a development state, the `php` built-in webserver can be used.
+
 ### Start MariaDB server using Docker
 
 ```bash
@@ -63,35 +66,79 @@ composer install
 
 ## Run Production Server
 
+* **Symonfy** does not support running the site using the built-in webserver. Instead, an external server like Apache2 or NGinX must be used.
+
 ### Clear Production Cache:
 
 ```bash
 ./bin/console cache:clear --env=prod --no-debug
 ./bin/console cache:warmup --env=prod --no-debug
 ```
-### Start Server
+### Apache2 Configuration
 
-```bash
-./bin/console server:run --env=prod --no-debug
+* Assuming that the application is stored at `/app`:
+
+```
+<VirtualHost *:80>
+	ServerName decks.starwarsccg.org
+
+	ServerAdmin webmaster@localhost
+	DocumentRoot /app/web
+	DirectoryIndex app.php
+
+	ErrorLog ${APACHE_LOG_DIR}/error.log
+	CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+	SetEnv database_host 127.0.0.1
+	SetEnv database_port 3306
+	SetEnv database_name deckdb
+	SetEnv database_user decks
+	SetEnv database_password XXXXXXXXXXXXXXXXXXXXXXXXX
+	SetEnv mailer_transport smtp
+	SetEnv mailer_host email-smtp.us-east-1.amazonaws.com
+	SetEnv mailer_user decks@starwarsccg.org
+	SetEnv mailer_password XXXXXXXXXXXXXXXXXXXXXXXXX
+	SetEnv email_sender_address decks@starwarsccg.org
+	SetEnv email_sender_name "SWCCG Decks"
+	SetEnv secret XXXXXXXXXXXXXXXXXXXXXXXXX
+	SetEnv cache_expiration 600
+	SetEnv website_name "SWCCG Decks"
+	SetEnv website_url decks.starwarsccg.org
+	SetEnv game_name SWCCG
+	SetEnv publisher_name Decipher
+	SetEnv google_analytics_tracking_code UA-00000000-1
+	SetEnv google_adsense_client ca-pub-000000000000000
+	SetEnv google_adsense_slot 0000000000
+
+	<Directory /app/web>
+		AllowOverride All
+		Require all granted
+	</Directory>
+
+</VirtualHost>
 ```
 
 
+## App Commands
 
-## Symfony commands
+### Symfony commands
 
 - run `composer install` to install PHP dependencies
 - run `npm install` to install JS dependencies
 - run `php bin/console doctrine:database:create` to create the database
 - run `php bin/console doctrine:migrations:migrate` to create the database schema
 - run `php bin/console doctrine:fixtures:load --env=prod` to load default application data
-- run `php bin/console app:import:std ../throneteki-json-data` or whatever the path to the data repository is to load cards and packs data
-- run `php bin/console app:restrictions:import ../throneteki-json-data` or whatever the path to the data repository is to load restricted lists
+- run `php bin/console app:import:std ../swccg-card-json/swccgdb_json` or whatever the path to the data repository is to load cards and packs data
+- run `php bin/console app:restrictions:import ../swccg-card-json/swccgdb_json` or whatever the path to the data repository is to load restricted lists
 - run `php bin/console app:restrictions:activate` to activate any restricted lists that apply
 - run `php bin/console bazinga:js-translation:dump assets/js` to export translation files for the frontend
 - run `php bin/console fos:js-routing:dump --target=public/js/fos_js_routes.js` to export routes for the frontend
+
+### Other
+
 - run `gulp` to build web assets
 
-## Setup an admin account
+### Setup an admin account
 
 - register (or run `php bin/console fos:user:create <username>`)
 - make sure your account is enabled (or run `php bin/console fos:user:activate <username>`)
