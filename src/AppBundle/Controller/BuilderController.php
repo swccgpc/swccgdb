@@ -632,7 +632,7 @@ class BuilderController extends Controller
         $response->headers->set('Content-Length', filesize($file));
         $response->headers->set('Content-Disposition', $response->headers->makeDisposition(
                         ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-            $this->get('texts')->slugify('thronesdb') . '.zip'
+            $this->get('texts')->slugify('swccg-decks') . '.zip'
         ));
 
         $response->setContent(file_get_contents($file));

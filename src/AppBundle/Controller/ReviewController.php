@@ -391,8 +391,8 @@ class ReviewController extends Controller
         );
         foreach ($spool as $email => $view) {
             $message = Swift_Message::newInstance()
-                    ->setSubject("[thronesdb] New review comment")
-                    ->setFrom(array("alsciende@thronesdb.com" => $user->getUsername()))
+                    ->setSubject("[swccg decks] New review comment")
+                    ->setFrom(array("devon+swccg-decks@hubner.org" => $user->getUsername()))
                     ->setTo($email)
                     ->setBody($this->renderView($view, $email_data), 'text/html');
             $this->get('mailer')->send($message);
