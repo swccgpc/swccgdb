@@ -2,36 +2,4 @@
 # Set parameters here that may be different on each deployment target of the app, e.g. development, staging, production.
 # https://symfony.com/doc/current/best_practices/configuration.html#infrastructure-related-configuration
 parameters:
-    database_host: 127.0.0.1
-    database_port: 3306
-    database_name: swccgdb
-    database_user: swccgdb_user
-    database_password: ~
-    # You should uncomment this if you want to use pdo_sqlite
-    #database_path: '%kernel.project_dir%/var/data/data.sqlite'
-
-    mailer_transport: gmail
-    mailer_host: 	smtp.gmail.com
-    mailer_user: swccgdb@gmail.com
-    mailer_password: ~
-
-    # A secret key that's used to generate certain security-related tokens
-    secret: ThisTokenIsNotSoSecretChangeIt
-
-    # units: seconds
-    cache_expiration:  600
-
-    # Email sender
-    email_sender_address: ~
-    email_sender_name: ~
-
-    # Branding
-    website_name: SWCCG Decks
-    website_url: swccgdb.com
-    game_name: Star Wars CCG
-    publisher_name: Decipher
-
-    # Analytics & AdSense
-    google_analytics_tracking_code: UA-00000000-1
-    google_adsense_client: ca-pub-000000000000000
-    google_adsense_slot: 0000000000
+  hello: world
