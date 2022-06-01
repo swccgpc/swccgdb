@@ -1,1 +1,8 @@
-<span class="card-name">{% if card.uniqueness %}{{card.uniqueness|raw}} {% endif %}{{ card.name }}</span>
+<span class="card-name">
+{# check if the uniqueness dots (•) are in the name. #}
+{# If they are NOT, then display the uniqueness dots. #}
+{% if '•' not in card.name %}
+  {% if card.uniqueness %}{{card.uniqueness|raw}} {% endif %}
+{% endif %}
+
+{{ card.name }}</span>
