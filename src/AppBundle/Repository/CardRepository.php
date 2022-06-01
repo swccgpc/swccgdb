@@ -34,11 +34,11 @@ class CardRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    ##
+    ## Find my code matches the /card/XXXXXX url
+    ##
     public function findByCode($code)
     {
-        print("DPH <b>CardRepository->findByCode</b>:<pre>");
-        var_dump($code);
-        print("</pre>");
         $qb = $this->createQueryBuilder('c')
             ->select('c')
             ->andWhere('c.code = ?1');

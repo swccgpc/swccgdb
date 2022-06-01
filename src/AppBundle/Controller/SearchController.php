@@ -87,13 +87,16 @@ class SearchController extends Controller {
     }
 
     public function zoomAction($card_code, Request $request) {
-        print("DPH zoomAction: <b>Searching for card code</b>: [${card_code}]<br />");
-        print("DPH zoomAction: <b>Request</b>:<pre>");
-        var_dump($request);
-        print("</pre>");
+        #print("DPH zoomAction: <b>Searching for card code</b>: [${card_code}]<br />");
+        #print("DPH zoomAction: <b>Request</b>:<pre>");
+        #var_dump($request);
+        #print("</pre>");
         $card = $this->getDoctrine()->getRepository('AppBundle:Card')->findByCode($card_code);
+	#print("DPH card:<pre>");
+	#var_dump($card);
+	#print("</pre>");
         if (!$card) {
-            throw $this->createNotFoundException('Sorry, this card is not in the database (yet?)');
+            throw $this->createNotFoundException('Sorry, this card was not found in the database.');
         }
 
         $game_name = $this->container->getParameter('game_name');
@@ -101,12 +104,12 @@ class SearchController extends Controller {
 
         $meta = $card->getName().", a ".$card->getSide()->getName()." ".$card->getType()->getName()." card for $game_name from the set ".$card->getSet()->getName()." published by $publisher_name.";
 
-        print("DPH card:<pre>");
-        print($card->getName());
-        print("\n");
-        print($card->getCode());
-        print("</pre>");
+	##
+	## The $card comes from the /api/pulic/cards item.
+	## The resulting "card" information is used to produce a query to the database for more information.
+	##
 
+	## forward the request to the AppBundle:Search:display controller.
         return $this->forward(
             'AppBundle:Search:display',
             array(
@@ -274,9 +277,9 @@ class SearchController extends Controller {
     }
 
     public function displayAction($q, $view="card", $sort, $page=1, $pagetitle="", $meta="", Request $request) {
-        print("DPH displayAction:\n<pre>");
-        var_dump($q);
-        print("</pre>");
+        #print("DPH displayAction:\n<pre>");
+        #var_dump($q);
+        #print("</pre>");
         $response = new Response();
         $response->setPublic();
         $response->setMaxAge($this->container->getParameter('cache_expiration'));
@@ -304,11 +307,13 @@ class SearchController extends Controller {
         $conditions = $this->get('cards_data')->syntax($q);
         $conditions = $this->get('cards_data')->validateConditions($conditions);
 
-        // reconstruction de la bonne chaine de recherche pour affichage
+	// reconstruction of the correct search string for display
         $q = $this->get('cards_data')->buildQueryFromConditions($conditions);
         #print("DPH <b>Conditions:</b><pre>");
         #var_dump($conditions);
         #print("</pre>");
+	#print("<pre>DPH2 q.........: ".print_r($q, true)."</pre>");
+	#print("<pre>DPH2 conditions: ".print_r($conditions, true)."</pre>");
         if ($q && $rows = $this->get('cards_data')->get_search_rows($conditions, $sort)) {
 
             if (count($rows) == 1) {

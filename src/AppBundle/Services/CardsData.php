@@ -103,7 +103,7 @@ class CardsData
     {
         $i = 0;
 
-        // construction de la requete sql
+	// build sql query
         $repo = $this->doctrine->getRepository('AppBundle:Card');
         $qb = $repo->createQueryBuilder('c')
                 ->select('c', 'p', 'y', 't', 'b', 's', 'r')
@@ -236,22 +236,27 @@ class CardsData
                         break;
                     }
                 case 'string': {
+			##
+			## the searchCode will be the card ID from /card/XXXXXXXX
+			##
                         switch ($searchCode) {
                             case '': // name or index
                                 {
                                     $or = [];
                                     foreach ($condition as $arg) {
-                                        $code = preg_match('/^\d\d\d\d\d$/u', $arg);
-                                        $acronym = preg_match('/^[A-Z]{2,}$/', $arg);
+					# preg_match returns 1 if matches
+					# /u = unicode support
+                                        $code = preg_match('/^[A-Zaz]+[0-9A-Za-z]+$/u', $arg);
+                                        #$acronym = preg_match('/^[A-Z]{2,}$/', $arg);
                                         if ($code) {
                                             $or[] = "(c.code = ?$i)";
                                             $qb->setParameter($i++, $arg);
-                                        } elseif ($acronym) {
-                                            $or[] = "(BINARY(c.name) like ?$i)";
-                                            $qb->setParameter($i++, "%$arg%");
-                                            $like = implode('% ', str_split($arg));
-                                            $or[] = "(REPLACE(c.name, '-', ' ') like ?$i)";
-                                            $qb->setParameter($i++, "$like%");
+                                        #} elseif ($acronym) {
+                                        #    $or[] = "(BINARY(c.name) like ?$i)";
+                                        #    $qb->setParameter($i++, "%$arg%");
+                                        #    $like = implode('% ', str_split($arg));
+                                        #    $or[] = "(REPLACE(c.name, '-', ' ') like ?$i)";
+                                        #    $qb->setParameter($i++, "$like%");
                                         } else {
                                             $or[] = "(c.name like ?$i)";
                                             $qb->setParameter($i++, "%$arg%");
@@ -347,6 +352,7 @@ class CardsData
         }
         $qb->addOrderBy('c.name');
         $qb->addOrderBy('c.code');
+
         $rows = $qb->getQuery()->getResult();
 
         return $rows;
