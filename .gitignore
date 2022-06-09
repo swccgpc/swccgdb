@@ -16,11 +16,6 @@ var/logs
 !var/sessions/.gitkeep
 !var/SymfonyRequirements.php
 /vendor/
-/web/bundles/
 .php_cs.cache
-web/css
-web/js
-web/assets/js
-web/images/ttsdecks
 node_modules
 .env

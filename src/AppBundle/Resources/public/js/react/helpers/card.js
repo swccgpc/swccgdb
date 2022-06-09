@@ -82,7 +82,8 @@ function sortCards(cards, sorts) {
 }
 
 export function formatName(card) {
-  const text = (card.uniqueness ? formatUniqueness(card) : '') + card.name;
+  var text = card.name;
+  if (! card.name.includes('•')) { text = (card.uniqueness ? formatUniqueness(card) : '') + card.name; }
   return <span dangerouslySetInnerHTML={{__html: text}} />
 }
 

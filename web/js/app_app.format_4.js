@@ -12,10 +12,12 @@
     /**
      * @memberOf format
      */
-    format.name = function name(card)
-    {
-        return (card.uniqueness ? app.format.uniqueness(card) : '') + card.name;
+    format.name = function name(card) {
+      var text = card.name;
+      if (! card.name.includes('•')) { text = (card.uniqueness ? formatUniqueness(card) : '') + card.name; }
+      return text;
     }
+
 
     format.side = function side(card)
     {
